@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj": {}
+    "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj": {
+    "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
+        "projectUniqueName": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
         "projectName": "WebApi.Infrastructure",
-        "projectPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
+        "projectPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\bdepvm4user\\.nuget\\packages\\",
-        "outputPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\obj\\",
+        "outputPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,18 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "AWSSDK.AWSSupport": {
+              "target": "Package",
+              "version": "[3.3.100.187, )"
+            },
+            "AWSSDK.CloudWatch": {
+              "target": "Package",
+              "version": "[3.3.107.31, )"
+            },
+            "AWSSDK.CostExplorer": {
+              "target": "Package",
+              "version": "[3.3.109.23, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

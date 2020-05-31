@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj": {}
+    "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj": {}
   },
   "projects": {
-    "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj": {
+    "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
+        "projectUniqueName": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
         "projectName": "WebApi.Core",
-        "projectPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
+        "projectPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
         "packagesPath": "C:\\Users\\bdepvm4user\\.nuget\\packages\\",
-        "outputPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\obj\\",
+        "outputPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,10 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "AWSSDK.CostExplorer": {
+              "target": "Package",
+              "version": "[3.3.109.23, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

@@ -184,11 +184,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
+      "projectUniqueName": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
       "projectName": "WebApi.Core",
-      "projectPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
+      "projectPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
       "packagesPath": "C:\\Users\\bdepvm4user\\.nuget\\packages\\",
-      "outputPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\obj\\",
+      "outputPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

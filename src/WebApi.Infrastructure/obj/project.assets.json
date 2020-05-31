@@ -2,6 +2,51 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
+      "AWSSDK.AWSSupport/3.3.100.187": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.3.107.3, 3.4.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.AWSSupport.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.AWSSupport.dll": {}
+        }
+      },
+      "AWSSDK.CloudWatch/3.3.107.31": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.3.107.3, 3.4.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.CloudWatch.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.CloudWatch.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.3.107.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.CostExplorer/3.3.109.23": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.3.107.3, 3.4.0)"
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.CostExplorer.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.CostExplorer.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
@@ -29,6 +74,175 @@
     }
   },
   "libraries": {
+    "AWSSDK.AWSSupport/3.3.100.187": {
+      "sha512": "UklwMZNr1wW5Kw8UIbmWCpXkTLHylViWDN/Q2J6n08S8/t0X5mR7WGJyG4zS2MUDsDacc0E6N+fTelqBGrXKyw==",
+      "type": "package",
+      "path": "awssdk.awssupport/3.3.100.187",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.AWSSupport.CodeAnalysis.dll",
+        "awssdk.awssupport.3.3.100.187.nupkg.sha512",
+        "awssdk.awssupport.nuspec",
+        "lib/MonoAndroid10/AWSSDK.AWSSupport.XML",
+        "lib/MonoAndroid10/AWSSDK.AWSSupport.dll",
+        "lib/MonoTouch10/AWSSDK.AWSSupport.XML",
+        "lib/MonoTouch10/AWSSDK.AWSSupport.dll",
+        "lib/MonoTouch10/AWSSDK.AWSSupport.pdb",
+        "lib/Xamarin.iOS10/AWSSDK.AWSSupport.XML",
+        "lib/Xamarin.iOS10/AWSSDK.AWSSupport.dll",
+        "lib/net35/AWSSDK.AWSSupport.dll",
+        "lib/net35/AWSSDK.AWSSupport.pdb",
+        "lib/net35/AWSSDK.AWSSupport.xml",
+        "lib/net45/AWSSDK.AWSSupport.dll",
+        "lib/net45/AWSSDK.AWSSupport.pdb",
+        "lib/net45/AWSSDK.AWSSupport.xml",
+        "lib/netstandard1.3/AWSSDK.AWSSupport.dll",
+        "lib/netstandard1.3/AWSSDK.AWSSupport.pdb",
+        "lib/netstandard1.3/AWSSDK.AWSSupport.xml",
+        "lib/netstandard2.0/AWSSDK.AWSSupport.dll",
+        "lib/netstandard2.0/AWSSDK.AWSSupport.pdb",
+        "lib/netstandard2.0/AWSSDK.AWSSupport.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.AWSSupport.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.AWSSupport.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.AWSSupport.pdb",
+        "lib/uap/AWSSDK.AWSSupport.XML",
+        "lib/uap/AWSSDK.AWSSupport.dll",
+        "lib/uap/AWSSDK.AWSSupport.pdb",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.CloudWatch/3.3.107.31": {
+      "sha512": "cF8yGevylEM6DPm872ctuPdO3pcx6oUaYKmouj+yjSLqiQI8imydzfSB5SCmBZ1aIOvcs/dcpLHkJJFvGnX4GA==",
+      "type": "package",
+      "path": "awssdk.cloudwatch/3.3.107.31",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.CloudWatch.CodeAnalysis.dll",
+        "awssdk.cloudwatch.3.3.107.31.nupkg.sha512",
+        "awssdk.cloudwatch.nuspec",
+        "lib/MonoAndroid10/AWSSDK.CloudWatch.XML",
+        "lib/MonoAndroid10/AWSSDK.CloudWatch.dll",
+        "lib/MonoTouch10/AWSSDK.CloudWatch.XML",
+        "lib/MonoTouch10/AWSSDK.CloudWatch.dll",
+        "lib/MonoTouch10/AWSSDK.CloudWatch.pdb",
+        "lib/Xamarin.iOS10/AWSSDK.CloudWatch.XML",
+        "lib/Xamarin.iOS10/AWSSDK.CloudWatch.dll",
+        "lib/net35/AWSSDK.CloudWatch.dll",
+        "lib/net35/AWSSDK.CloudWatch.pdb",
+        "lib/net35/AWSSDK.CloudWatch.xml",
+        "lib/net45/AWSSDK.CloudWatch.dll",
+        "lib/net45/AWSSDK.CloudWatch.pdb",
+        "lib/net45/AWSSDK.CloudWatch.xml",
+        "lib/netstandard1.3/AWSSDK.CloudWatch.dll",
+        "lib/netstandard1.3/AWSSDK.CloudWatch.pdb",
+        "lib/netstandard1.3/AWSSDK.CloudWatch.xml",
+        "lib/netstandard2.0/AWSSDK.CloudWatch.dll",
+        "lib/netstandard2.0/AWSSDK.CloudWatch.pdb",
+        "lib/netstandard2.0/AWSSDK.CloudWatch.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.CloudWatch.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.CloudWatch.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.CloudWatch.pdb",
+        "lib/uap/AWSSDK.CloudWatch.XML",
+        "lib/uap/AWSSDK.CloudWatch.dll",
+        "lib/uap/AWSSDK.CloudWatch.pdb",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "AWSSDK.Core/3.3.107.3": {
+      "sha512": "IcCyx00HrNsjs2/NLaRIU+DooNNVhHyUf3/lACX2z2ktQTAdiZi62IUPURILjIIUbaopSULwh3tMWJrT9Cl8aw==",
+      "type": "package",
+      "path": "awssdk.core/3.3.107.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.core.3.3.107.3.nupkg.sha512",
+        "awssdk.core.nuspec",
+        "lib/MonoAndroid10/AWSSDK.Core.XML",
+        "lib/MonoAndroid10/AWSSDK.Core.dll",
+        "lib/MonoAndroid10/AWSSDK.Core.pdb",
+        "lib/MonoTouch10/AWSSDK.Core.XML",
+        "lib/MonoTouch10/AWSSDK.Core.dll",
+        "lib/Xamarin.Mac20/AWSSDK.Core.XML",
+        "lib/Xamarin.Mac20/AWSSDK.Core.dll",
+        "lib/Xamarin.iOS10/AWSSDK.Core.XML",
+        "lib/Xamarin.iOS10/AWSSDK.Core.dll",
+        "lib/net35/AWSSDK.Core.dll",
+        "lib/net35/AWSSDK.Core.pdb",
+        "lib/net35/AWSSDK.Core.xml",
+        "lib/net45/AWSSDK.Core.dll",
+        "lib/net45/AWSSDK.Core.pdb",
+        "lib/net45/AWSSDK.Core.xml",
+        "lib/netstandard1.3/AWSSDK.Core.dll",
+        "lib/netstandard1.3/AWSSDK.Core.pdb",
+        "lib/netstandard1.3/AWSSDK.Core.xml",
+        "lib/netstandard2.0/AWSSDK.Core.dll",
+        "lib/netstandard2.0/AWSSDK.Core.pdb",
+        "lib/netstandard2.0/AWSSDK.Core.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.Core.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.Core.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.Core.pdb",
+        "lib/uap/AWSSDK.Core.XML",
+        "lib/uap/AWSSDK.Core.dll",
+        "lib/uap/AWSSDK.Core.pdb",
+        "lib/win8/AWSSDK.Core.XML",
+        "lib/win8/AWSSDK.Core.dll",
+        "lib/win8/AWSSDK.Core.pdb",
+        "lib/wp8/AWSSDK.Core.XML",
+        "lib/wp8/AWSSDK.Core.dll",
+        "lib/wp8/AWSSDK.Core.pdb",
+        "lib/wpa81/AWSSDK.Core.XML",
+        "lib/wpa81/AWSSDK.Core.dll",
+        "lib/wpa81/AWSSDK.Core.pdb",
+        "tools/account-management.ps1"
+      ]
+    },
+    "AWSSDK.CostExplorer/3.3.109.23": {
+      "sha512": "4gBPAhBR1KJbX/pTk3+zJydEit2G/D/K9oTt28h98zRX0AFjFBA/e305XenJ49hRj6zCLorNzzMRyJeu+ie+SA==",
+      "type": "package",
+      "path": "awssdk.costexplorer/3.3.109.23",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/AWSSDK.CostExplorer.CodeAnalysis.dll",
+        "awssdk.costexplorer.3.3.109.23.nupkg.sha512",
+        "awssdk.costexplorer.nuspec",
+        "lib/MonoAndroid10/AWSSDK.CostExplorer.XML",
+        "lib/MonoAndroid10/AWSSDK.CostExplorer.dll",
+        "lib/MonoTouch10/AWSSDK.CostExplorer.XML",
+        "lib/MonoTouch10/AWSSDK.CostExplorer.dll",
+        "lib/MonoTouch10/AWSSDK.CostExplorer.pdb",
+        "lib/Xamarin.iOS10/AWSSDK.CostExplorer.XML",
+        "lib/Xamarin.iOS10/AWSSDK.CostExplorer.dll",
+        "lib/net35/AWSSDK.CostExplorer.dll",
+        "lib/net35/AWSSDK.CostExplorer.pdb",
+        "lib/net35/AWSSDK.CostExplorer.xml",
+        "lib/net45/AWSSDK.CostExplorer.dll",
+        "lib/net45/AWSSDK.CostExplorer.pdb",
+        "lib/net45/AWSSDK.CostExplorer.xml",
+        "lib/netstandard1.3/AWSSDK.CostExplorer.dll",
+        "lib/netstandard1.3/AWSSDK.CostExplorer.pdb",
+        "lib/netstandard1.3/AWSSDK.CostExplorer.xml",
+        "lib/netstandard2.0/AWSSDK.CostExplorer.dll",
+        "lib/netstandard2.0/AWSSDK.CostExplorer.pdb",
+        "lib/netstandard2.0/AWSSDK.CostExplorer.xml",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.CostExplorer.XML",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.CostExplorer.dll",
+        "lib/portable-net45+win8+wpa81+wp8/AWSSDK.CostExplorer.pdb",
+        "lib/uap/AWSSDK.CostExplorer.XML",
+        "lib/uap/AWSSDK.CostExplorer.dll",
+        "lib/uap/AWSSDK.CostExplorer.pdb",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
@@ -174,6 +388,9 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "AWSSDK.AWSSupport >= 3.3.100.187",
+      "AWSSDK.CloudWatch >= 3.3.107.31",
+      "AWSSDK.CostExplorer >= 3.3.109.23",
       "NETStandard.Library >= 2.0.3"
     ]
   },
@@ -184,11 +401,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
+      "projectUniqueName": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
       "projectName": "WebApi.Infrastructure",
-      "projectPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
+      "projectPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\bdepvm4user\\.nuget\\packages\\",
-      "outputPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\obj\\",
+      "outputPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -218,6 +435,18 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
+          "AWSSDK.AWSSupport": {
+            "target": "Package",
+            "version": "[3.3.100.187, )"
+          },
+          "AWSSDK.CloudWatch": {
+            "target": "Package",
+            "version": "[3.3.107.31, )"
+          },
+          "AWSSDK.CostExplorer": {
+            "target": "Package",
+            "version": "[3.3.109.23, )"
+          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pF8LP4Mm789fg8CDhIu53+9t0TRDWvcdP5sB/LVZiLdXIX2zE4I7C0UawFzsvyTpikvEBuWhq5zaUpsK+aYJMA==",
+  "dgSpecHash": "ojVnoH3LQPcq0OXNWlzLIBN+cMK1vTy/Xb2ZsBn/9L6DC7cx8tHVsk2x0Klc3SQeC98/jD/5SLMlofgF7Y48bQ==",
   "success": true,
-  "projectFilePath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
+  "projectFilePath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Core\\WebApi.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\bdepvm4user\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"

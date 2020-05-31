@@ -12,4 +12,10 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\bdepvm4user\.nuget\packages\awssdk.core\3.3.107.3</PkgAWSSDK_Core>
+    <PkgAWSSDK_CostExplorer Condition=" '$(PkgAWSSDK_CostExplorer)' == '' ">C:\Users\bdepvm4user\.nuget\packages\awssdk.costexplorer\3.3.109.23</PkgAWSSDK_CostExplorer>
+    <PkgAWSSDK_CloudWatch Condition=" '$(PkgAWSSDK_CloudWatch)' == '' ">C:\Users\bdepvm4user\.nuget\packages\awssdk.cloudwatch\3.3.107.31</PkgAWSSDK_CloudWatch>
+    <PkgAWSSDK_AWSSupport Condition=" '$(PkgAWSSDK_AWSSupport)' == '' ">C:\Users\bdepvm4user\.nuget\packages\awssdk.awssupport\3.3.100.187</PkgAWSSDK_AWSSupport>
+  </PropertyGroup>
 </Project>

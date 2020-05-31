@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "qatgN8v3YARoooOCd8xOoCkP1+rsDB1eTl/8m4iwP5MQ3/WVuTCXhjyOThNuM5ejKP8aj2E1N/syNtnVdB7BJA==",
+  "dgSpecHash": "zxL9oRoEy79vGi9BH7WqJZ47NjW2nJk54Df3VmrhcVCRICHgFzXd3TQwzxGBmMr/FVbZA5TcsdsrMyhab+JwGA==",
   "success": true,
-  "projectFilePath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
+  "projectFilePath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi.Infrastructure\\WebApi.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\bdepvm4user\\.nuget\\packages\\awssdk.awssupport\\3.3.100.187\\awssdk.awssupport.3.3.100.187.nupkg.sha512",
+    "C:\\Users\\bdepvm4user\\.nuget\\packages\\awssdk.cloudwatch\\3.3.107.31\\awssdk.cloudwatch.3.3.107.31.nupkg.sha512",
+    "C:\\Users\\bdepvm4user\\.nuget\\packages\\awssdk.core\\3.3.107.3\\awssdk.core.3.3.107.3.nupkg.sha512",
+    "C:\\Users\\bdepvm4user\\.nuget\\packages\\awssdk.costexplorer\\3.3.109.23\\awssdk.costexplorer.3.3.109.23.nupkg.sha512",
     "C:\\Users\\bdepvm4user\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi\\WebApi.csproj": {}
+    "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi\\WebApi.csproj": {}
   },
   "projects": {
-    "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi\\WebApi.csproj": {
+    "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi\\WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi\\WebApi.csproj",
+        "projectUniqueName": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi\\WebApi.csproj",
         "projectName": "WebApi",
-        "projectPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi\\WebApi.csproj",
+        "projectPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi\\WebApi.csproj",
         "packagesPath": "C:\\Users\\bdepvm4user\\.nuget\\packages\\",
-        "outputPath": "C:\\ankit\\OperationalDashboardAPI\\src\\WebApi\\obj\\",
+        "outputPath": "C:\\ankit\\GithubOperationalDashboard\\OperationalDashboardsAPI\\src\\WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

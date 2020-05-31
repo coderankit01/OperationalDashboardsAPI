@@ -9,10 +9,54 @@
     ".NETStandard,Version=v2.0/": {
       "WebApi.Infrastructure/1.0.0": {
         "dependencies": {
+          "AWSSDK.AWSSupport": "3.3.100.187",
+          "AWSSDK.CloudWatch": "3.3.107.31",
+          "AWSSDK.CostExplorer": "3.3.109.23",
           "NETStandard.Library": "2.0.3"
         },
         "runtime": {
           "WebApi.Infrastructure.dll": {}
+        }
+      },
+      "AWSSDK.AWSSupport/3.3.100.187": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.107.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.AWSSupport.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.100.187"
+          }
+        }
+      },
+      "AWSSDK.CloudWatch/3.3.107.31": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.107.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.CloudWatch.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.107.31"
+          }
+        }
+      },
+      "AWSSDK.Core/3.3.107.3": {
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.107.3"
+          }
+        }
+      },
+      "AWSSDK.CostExplorer/3.3.109.23": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.107.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.CostExplorer.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.109.23"
+          }
         }
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
@@ -28,6 +72,34 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.AWSSupport/3.3.100.187": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UklwMZNr1wW5Kw8UIbmWCpXkTLHylViWDN/Q2J6n08S8/t0X5mR7WGJyG4zS2MUDsDacc0E6N+fTelqBGrXKyw==",
+      "path": "awssdk.awssupport/3.3.100.187",
+      "hashPath": "awssdk.awssupport.3.3.100.187.nupkg.sha512"
+    },
+    "AWSSDK.CloudWatch/3.3.107.31": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cF8yGevylEM6DPm872ctuPdO3pcx6oUaYKmouj+yjSLqiQI8imydzfSB5SCmBZ1aIOvcs/dcpLHkJJFvGnX4GA==",
+      "path": "awssdk.cloudwatch/3.3.107.31",
+      "hashPath": "awssdk.cloudwatch.3.3.107.31.nupkg.sha512"
+    },
+    "AWSSDK.Core/3.3.107.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IcCyx00HrNsjs2/NLaRIU+DooNNVhHyUf3/lACX2z2ktQTAdiZi62IUPURILjIIUbaopSULwh3tMWJrT9Cl8aw==",
+      "path": "awssdk.core/3.3.107.3",
+      "hashPath": "awssdk.core.3.3.107.3.nupkg.sha512"
+    },
+    "AWSSDK.CostExplorer/3.3.109.23": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4gBPAhBR1KJbX/pTk3+zJydEit2G/D/K9oTt28h98zRX0AFjFBA/e305XenJ49hRj6zCLorNzzMRyJeu+ie+SA==",
+      "path": "awssdk.costexplorer/3.3.109.23",
+      "hashPath": "awssdk.costexplorer.3.3.109.23.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",

@@ -16,3 +16,12 @@ C:\ankit\OperationalDashboardAPI\src\WebApi.Infrastructure\obj\Debug\netstandard
 C:\ankit\OperationalDashboardAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.AssemblyInfo.cs
 C:\ankit\OperationalDashboardAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.dll
 C:\ankit\OperationalDashboardAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.pdb
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\bin\Debug\netstandard2.0\WebApi.Infrastructure.deps.json
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\bin\Debug\netstandard2.0\WebApi.Infrastructure.dll
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\bin\Debug\netstandard2.0\WebApi.Infrastructure.pdb
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.csprojAssemblyReference.cache
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.AssemblyInfoInputs.cache
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.AssemblyInfo.cs
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.dll
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.pdb
+C:\ankit\GithubOperationalDashboard\OperationalDashboardsAPI\src\WebApi.Infrastructure\obj\Debug\netstandard2.0\WebApi.Infrastructure.csproj.CoreCompileInputs.cache
