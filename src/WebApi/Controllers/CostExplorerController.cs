@@ -30,5 +30,28 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await costExplorerOperations.GetCostUsage(costUsageRequest);
             return Ok(response);
         }
+
+        [HttpGet("CostByMonth")]
+        public async Task<IActionResult> GetCostByMonth( [FromBody]CostUsageRequest costUsageRequest)
+        {
+            var response = await costExplorerOperations.GetCostByMonth(costUsageRequest);
+            return Ok(response);
+        }
+
+
+        [HttpGet("CurrentMonth")]
+        public async Task<IActionResult> GetCurrentMonthCost([FromBody]CostUsageRequest costUsageRequest)
+        {
+            var response = await costExplorerOperations.GetCurrentMonthCost(costUsageRequest);
+            return Ok(response);
+        }
+
+        [HttpGet("CurrentYear")]
+        public async Task<IActionResult> GetCurrentYearCost([FromBody]CostUsageRequest costUsageRequest)
+        {
+            var response = await costExplorerOperations.GetCurrentYearCost(costUsageRequest);
+            return Ok(response);
+        }
+
     }
 }

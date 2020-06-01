@@ -10,5 +10,9 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
     public interface ICostExplorerOperations
     {
         Task<List<CostUsageResponse>> GetCostUsage(CostUsageRequest costUsageRequest);
+        Task<List<CostUsageResponse>> GetCurrentMonthCost(CostUsageRequest costUsageRequest);
+        Task<List<CostUsageResponse>> GetCostByMonth(CostUsageRequest costUsageRequest);
+        Task<List<CostUsageResponse>> GetCurrentYearCost(CostUsageRequest costUsageRequest);
+
     }
 }

@@ -32,9 +32,11 @@ namespace OperationDashboard.Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<ICostExplorerOperations, CostExplorerOperations>();
+            services.AddScoped<ICostExplorerOperations, CachedCostExplorerOperations>();
+            services.AddScoped<CostExplorerOperations>();
             services.AddScoped<ICostExplorerRepository, CostExplorerRepository>();
             services.AddAutoMapper(typeof(AutoMapping));
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
