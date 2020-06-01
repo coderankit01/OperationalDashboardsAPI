@@ -6,10 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Response\" />
-    <Folder Include="Models\Request\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi.Infrastructure\WebApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
