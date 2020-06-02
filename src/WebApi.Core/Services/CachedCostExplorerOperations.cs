@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Amazon.CostExplorer.Model;
+using Microsoft.Extensions.Caching.Memory;
 using OperationalDashboard.Web.Api.Core.Extensions;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Models.Request;
@@ -59,5 +60,12 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 return await costExplorerOperations.GetCostByMonth(costUsageRequest);
             });
         }
+
+        public async Task<List<CostUsageResponse>> GetCostForecast(CostUsageRequest costUsageRequest)
+        {
+           
+            var response = await costExplorerOperations.GetCostForecast(costUsageRequest);
+            return response;
         }
+    }
 }

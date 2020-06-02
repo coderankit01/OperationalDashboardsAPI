@@ -17,6 +17,12 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
             var response = await amazonCostExplorerClient.GetCostAndUsageAsync(costUsageRequest);
             return response;
         }
+        public async Task<GetCostForecastResponse> GetCostForecast(GetCostForecastRequest costForecastRequest)
+        {
+            var response = await amazonCostExplorerClient.GetCostForecastAsync(costForecastRequest);
+            return response;
+        }
+
 
     }
 }

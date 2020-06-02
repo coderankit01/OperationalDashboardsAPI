@@ -1,4 +1,6 @@
-﻿using Amazon.CostExplorer.Model;
+﻿using Amazon.CloudWatch.Model;
+using Amazon.CostExplorer;
+using Amazon.CostExplorer.Model;
 using AutoMapper;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Models.Request;
@@ -78,6 +80,27 @@ namespace OperationalDashboard.Web.Api.Core.Services
                                         Amount = mapResponse
                                   }
             };
+        }
+        public async Task<List<CostUsageResponse>> GetCostForecast(CostUsageRequest costUsageRequest)
+        {
+            var mapRequest = mapper.Map<GetCostForecastRequest>(costUsageRequest);
+            mapRequest.Granularity = Granularity.MONTHLY;
+            mapRequest.Metric = Amazon.CostExplorer.Metric.UNBLENDED_COST;
+            string startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("yyyy-MM-dd");
+            string endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddYears(1).AddDays(-1).ToString("yyyy-MM-dd");
+            mapRequest.TimePeriod = new DateInterval()
+            {
+              Start= startDate,
+              End= endDate
+        };
+            var response = await costExplorerRepository.GetCostForecast(mapRequest);
+            var mapResponse = response.ForecastResultsByTime.Select(x => new CostUsageResponse()
+            {
+                Name = Convert.ToDateTime(x.TimePeriod.Start).ToString("MMMM") + "-" + Convert.ToDateTime(x.TimePeriod.Start).Year,
+                Amount = Convert.ToDecimal(x.MeanValue),
+                Date= Convert.ToDateTime(x.TimePeriod.Start)
+            });
+            return mapResponse.ToList();
         }
     }
 }

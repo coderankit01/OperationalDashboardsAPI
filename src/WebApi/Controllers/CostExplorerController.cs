@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.CostExplorer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OperationalDashboard.Web.Api.Core.Interfaces;
@@ -52,6 +53,13 @@ namespace OperationDashboard.Web.Api.Controllers
         public async Task<IActionResult> GetCurrentYearCost([FromBody]CostUsageRequest costUsageRequest)
         {
             var response = await costExplorerOperations.GetCurrentYearCost(costUsageRequest);
+            return Ok(response);
+        }
+
+        [HttpGet("Forecast")]
+        public async Task<IActionResult> GetMonthlyCostPrediction([FromBody]CostUsageRequest costUsageRequest)
+        {
+            var response = await costExplorerOperations.GetCostForecast(costUsageRequest);
             return Ok(response);
         }
 

@@ -9,5 +9,6 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Interfaces
     public interface ICostExplorerRepository
     {
         Task<GetCostAndUsageResponse> GetCostAndUsage(GetCostAndUsageRequest costUsageRequest);
+        Task<GetCostForecastResponse> GetCostForecast(GetCostForecastRequest costForecastRequest);
     }
 }

@@ -1,4 +1,5 @@
-﻿using OperationalDashboard.Web.Api.Core.Models.Request;
+﻿using Amazon.CostExplorer.Model;
+using OperationalDashboard.Web.Api.Core.Models.Request;
 using OperationalDashboard.Web.Api.Core.Models.Response;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
         Task<List<CostUsageResponse>> GetCurrentMonthCost(CostUsageRequest costUsageRequest);
         Task<List<CostUsageResponse>> GetCostByMonth(CostUsageRequest costUsageRequest);
         Task<List<CostUsageResponse>> GetCurrentYearCost(CostUsageRequest costUsageRequest);
-
+        Task<List<CostUsageResponse>> GetCostForecast(CostUsageRequest costUsageRequest);
+    
     }
 }

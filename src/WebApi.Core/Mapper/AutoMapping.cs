@@ -22,6 +22,8 @@ namespace OperationalDashboard.Web.Api.Core.Mapper
                .ForMember(d => d.Metrics, opt => opt.MapFrom(s =>new List<string>() { s.Metrics }))
                .ForMember(d => d.GroupBy, opt => opt.MapFrom(s => s.GroupBy))
                .ForMember(d => d.Filter, opt => opt.MapFrom(s => s.Filters.Values.Any()? new Expression() { Dimensions = new DimensionValues() { Key = Dimension.FindValue(s.Filters.Key), Values = s.Filters.Values } }:new Expression()));
+            CreateMap<CostUsageRequest, GetCostForecastRequest>()
+                  .ForMember(d => d.Filter, opt => opt.MapFrom(s => s.Filters.Values.Any() ? new Expression() { Dimensions = new DimensionValues() { Key = Dimension.FindValue(s.Filters.Key), Values = s.Filters.Values } } : new Expression()));
         }
     }
 }
