@@ -17,6 +17,7 @@ using OperationalDashboard.Web.Api.Core.Mapper;
 using OperationalDashboard.Web.Api.Core.Services;
 using OperationalDashboard.Web.Api.Infrastructure.Data.AWS;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
+using OperationDashboard.Web.Api.Identity;
 
 namespace OperationDashboard.Web.Api
 {
@@ -41,14 +42,7 @@ namespace OperationDashboard.Web.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OperationalDashboardAPI", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = @"Provide API key for authentication",
-                    Name = "Cisco-X-Api-Key",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
+                c.OperationFilter<SwaggerHeaderFilter>();
             });
 
 
