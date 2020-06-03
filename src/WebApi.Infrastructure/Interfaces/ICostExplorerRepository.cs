@@ -10,5 +10,6 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Interfaces
     {
         Task<GetCostAndUsageResponse> GetCostAndUsage(GetCostAndUsageRequest costUsageRequest);
         Task<GetCostForecastResponse> GetCostForecast(GetCostForecastRequest costForecastRequest);
+        Task<GetRightsizingRecommendationResponse> GetRightsizingRecommendation(GetRightsizingRecommendationRequest rightsizingRecommendationRequest);
     }
 }

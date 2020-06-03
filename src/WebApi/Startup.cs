@@ -36,6 +36,7 @@ namespace OperationDashboard.Web.Api
             services.AddScoped<ICostExplorerOperations, CachedCostExplorerOperations>();
             services.AddScoped<CostExplorerOperations>();
             services.AddScoped<ICostExplorerRepository, CostExplorerRepository>();
+            services.AddScoped<ICostRecommendationsOperations, CostRecommendationsOperations>();
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddMemoryCache();
             services.AddSwaggerGen(c =>
@@ -50,7 +51,7 @@ namespace OperationDashboard.Web.Api
                     Scheme = "Bearer"
                 });
             });
-
+       
 
         }
 

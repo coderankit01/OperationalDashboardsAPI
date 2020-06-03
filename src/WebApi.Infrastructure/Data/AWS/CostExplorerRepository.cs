@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Amazon;
@@ -9,7 +10,7 @@ using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 
 namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
 {
-   public class CostExplorerRepository: ICostExplorerRepository
+    public class CostExplorerRepository : ICostExplorerRepository
     {
         AmazonCostExplorerClient amazonCostExplorerClient = new AmazonCostExplorerClient("AKIA5SR5QSU3R352WQ6J", "yw4CqQmLlB7CdCKz06Cv2LIsWfLe9AQVvxk8HmKL", RegionEndpoint.GetBySystemName("ap-southeast-1"));
         public async Task<GetCostAndUsageResponse> GetCostAndUsage(GetCostAndUsageRequest costUsageRequest)
@@ -23,6 +24,11 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
             return response;
         }
 
-
+        public async Task<GetRightsizingRecommendationResponse> GetRightsizingRecommendation(GetRightsizingRecommendationRequest rightsizingRecommendationRequest)
+        {
+            var response = await amazonCostExplorerClient.GetRightsizingRecommendationAsync(rightsizingRecommendationRequest);
+            return response;
+        }
     }
+
 }
