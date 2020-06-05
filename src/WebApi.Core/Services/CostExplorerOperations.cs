@@ -37,6 +37,34 @@ namespace OperationalDashboard.Web.Api.Core.Services
                                      );
             return mapResponse.ToList();
         }
+        public async Task<List<CostUsageResponse>> GetLinkedAccounts()
+        {
+            CostUsageRequest costUsageRequest = new CostUsageRequest()
+            {
+                StartDate = DateTime.Now.AddDays(-30),
+                EndDate = DateTime.Now,
+                Granularity = "MONTHLY",
+                GroupBy = new List<GroupBy>()
+                {
+                    new GroupBy()
+                {
+                    Key = "LINKED_ACCOUNT",
+                    Type = "DIMENSION"
+
+                }
+                },
+                Metrics="UnblendedCost"
+            };
+            var mapRequest = mapper.Map<GetCostAndUsageRequest>(costUsageRequest);
+            var response = await costExplorerRepository.GetCostAndUsage(mapRequest);
+            var mapResponse = response.ResultsByTime.SelectMany(x => x.Groups).GroupBy(x => x.Keys[response.GroupDefinitions.Count - 1])
+                              .Select(z => new CostUsageResponse
+                              {
+                                  Name = z.Key,
+                              }
+                                     );
+            return mapResponse.ToList();
+        }
         public async Task<List<CostUsageResponse>> GetCostByMonth(CostUsageRequest costUsageRequest)
         {
             var mapRequest = mapper.Map<GetCostAndUsageRequest>(costUsageRequest);

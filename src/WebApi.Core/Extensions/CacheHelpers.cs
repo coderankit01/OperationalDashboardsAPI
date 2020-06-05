@@ -14,6 +14,7 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
         private static readonly string _monthItemsKeyTemplate = "month-{0}-{1}-{2}-{3}";
         private static readonly string _metricItemsKeyTemplate = "metric-{0}-{1}";
         private static readonly string _listMetricItemsKeyTemplate = "listmetric";
+        private static readonly string _LinkedAccountMetricItemsKeyTemplate = "account-{0}-{1}";
         public static readonly TimeSpan absoluteExpirationRelativeToNow = TimeSpan.FromDays(1);
         public static string GenerateServiceCacheItemKey(CostUsageRequest costUsageRequest)
         {
@@ -40,6 +41,10 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
         public static string GenerateCacheKeyForListMetric()
         {
             return string.Format(_listMetricItemsKeyTemplate);
+        }
+        public static string GenerateCacheKeyForLinkedAccount(string startDate,string endDate)
+        {
+            return string.Format(_LinkedAccountMetricItemsKeyTemplate,startDate,endDate);
         }
     }
 }

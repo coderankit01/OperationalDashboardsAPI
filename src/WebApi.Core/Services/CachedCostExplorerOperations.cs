@@ -67,5 +67,14 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var response = await costExplorerOperations.GetCostForecast(costUsageRequest);
             return response;
         }
+        public async Task<List<CostUsageResponse>> GetLinkedAccounts()
+        {
+            var cacheKey = CacheHelpers.GenerateCacheKeyForLinkedAccount(DateTime.Now.AddDays(-30).ToString("yyyy-mm-dd"), DateTime.Now.ToString("yyyy-mm-dd"));
+            return await cache.GetOrCreateAsync(cacheKey, async entry =>
+            {
+                entry.AbsoluteExpirationRelativeToNow = CacheHelpers.absoluteExpirationRelativeToNow;
+                return await costExplorerOperations.GetLinkedAccounts();
+            });
+        }
     }
 }

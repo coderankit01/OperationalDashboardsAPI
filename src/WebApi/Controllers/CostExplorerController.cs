@@ -33,30 +33,36 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await costExplorerOperations.GetCostUsage(costUsageRequest);
             return Ok(response);
         }
+        
+        [HttpGet("Accounts")]
+        public async Task<IActionResult> GetLinkedAccounts()
+        {
+            var response = await costExplorerOperations.GetLinkedAccounts();
+            return Ok(response);
+        }
 
-        [HttpGet("CostByMonth")]
+        [HttpPost("CostByMonth")]
         public async Task<IActionResult> GetCostByMonth( [FromBody]CostUsageRequest costUsageRequest)
         {
             var response = await costExplorerOperations.GetCostByMonth(costUsageRequest);
             return Ok(response);
         }
-
-
-        [HttpGet("CurrentMonth")]
+        
+        [HttpPost("CurrentMonth")]
         public async Task<IActionResult> GetCurrentMonthCost([FromBody]CostUsageRequest costUsageRequest)
         {
             var response = await costExplorerOperations.GetCurrentMonthCost(costUsageRequest);
             return Ok(response);
         }
 
-        [HttpGet("CurrentYear")]
+        [HttpPost("CurrentYear")]
         public async Task<IActionResult> GetCurrentYearCost([FromBody]CostUsageRequest costUsageRequest)
         {
             var response = await costExplorerOperations.GetCurrentYearCost(costUsageRequest);
             return Ok(response);
         }
 
-        [HttpGet("Forecast")]
+        [HttpPost("Forecast")]
         public async Task<IActionResult> GetMonthlyCostPrediction([FromBody]CostUsageRequest costUsageRequest)
         {
             var response = await costExplorerOperations.GetCostForecast(costUsageRequest);
