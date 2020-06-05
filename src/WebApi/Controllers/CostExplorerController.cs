@@ -27,7 +27,7 @@ namespace OperationDashboard.Web.Api.Controllers
             
             return Ok("Connected");
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetCostUsage([FromBody]CostUsageRequest costUsageRequest)
         {
             var response = await costExplorerOperations.GetCostUsage(costUsageRequest);
