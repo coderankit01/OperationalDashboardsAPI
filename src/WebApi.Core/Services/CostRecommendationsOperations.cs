@@ -1,6 +1,7 @@
 ﻿using Amazon.CostExplorer.Model;
 using AutoMapper;
 using OperationalDashboard.Web.Api.Core.Interfaces;
+using OperationalDashboard.Web.Api.Core.Models.Response;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OperationalDashboard.Web.Api.Core.Services
 {
-    public class CostRecommendationsOperations: ICostRecommendationsOperations
+    public class CostRecommendationsOperations : ICostRecommendationsOperations
     {
 
         private static IMapper mapper { get; set; }
@@ -20,41 +21,65 @@ namespace OperationalDashboard.Web.Api.Core.Services
             mapper = _mapper;
             costExplorerRepository = _costExplorerRepository;
         }
-        public async Task<GetRightsizingRecommendationResponse> GetRightsizingRecommendation()
+        public async Task<List<CostRecommendationResponse>> GetCurrentCostRecomNSavingsCost()
         {
             GetRightsizingRecommendationRequest rightsizingRecommendationRequest = new GetRightsizingRecommendationRequest();
-            //rightsizingRecommendationRequest.Filter = new Expression()
-            //{
-            //    Dimensions = new DimensionValues()
-            //    {
-            //        Values = new List<string>()
-            //        {
-            //            //"holds a string",
-            //            //"ksajfskf"
-            //        }
-            //    },
-            //    Tags = new TagValues()
-            //    {
-            //        Values = new List<string>()
-            //        {
-            //            "tagvalues",
-            //            "kfhasfkj"
-            //        }
-            //    },
-            //    CostCategories = new CostCategoryValues()
-            //    {
-            //        Values = new List<string>
-            //        {
-            //            "kjdsfskjd",
-            //            "jfksa"
-            //        },
-            //        Key = "hfkjdf"
-            //    }
-            //};
+            rightsizingRecommendationRequest.Service = "AmazonEC2";
             var response = await costExplorerRepository.GetRightsizingRecommendation(rightsizingRecommendationRequest);
-            var totalCost = response.RightsizingRecommendations.Select(x => Convert.ToDecimal(x.CurrentInstance.MonthlyCost)).Sum();
-            var monthlyEstimationCost = response.RightsizingRecommendations.SelectMany(x => x.ModifyRecommendationDetail.TargetInstances).Select(y => Convert.ToDecimal(y.EstimatedMonthlyCost)).Sum();
+            var recommendationResponse = response.RightsizingRecommendations.Select(x => new CostRecommendationResponse
+            {
+                ResourceId = x.CurrentInstance.ResourceId,
+                CurrentMonthlytotalCost = Convert.ToDecimal(x.CurrentInstance.MonthlyCost),
+                RecommendedmonthlyEstimationCost = Convert.ToDecimal(x.ModifyRecommendationDetail.TargetInstances.FirstOrDefault().EstimatedMonthlyCost),
+                TotalMonthlySavings = Convert.ToDecimal(x.CurrentInstance.MonthlyCost) - Convert.ToDecimal(x.ModifyRecommendationDetail.TargetInstances.FirstOrDefault().EstimatedMonthlyCost)
+            });
+            return recommendationResponse.ToList();
+        }
+
+        //2. 3.
+        public async Task<List<CostRecommendationResponse>> GetCPUusageDetails()
+        {
+            GetRightsizingRecommendationRequest rightsizingRecommendationRequest = new GetRightsizingRecommendationRequest();
+            rightsizingRecommendationRequest.Service = "AmazonEC2";
+            var response = await costExplorerRepository.GetRightsizingRecommendation(rightsizingRecommendationRequest);
+            var cpuUsageDetails = response.RightsizingRecommendations.Select(x => new CostRecommendationResponse
+            {
+                ResourceId = x.CurrentInstance.ResourceId,
+                UnusedCurrentCPUusage = 100 - Convert.ToDecimal(x.CurrentInstance.ResourceUtilization
+                .EC2ResourceUtilization.MaxCpuUtilizationPercentage),
+                CurrentCPUusage = Convert.ToDecimal(x.CurrentInstance.ResourceUtilization.EC2ResourceUtilization.MaxCpuUtilizationPercentage),
+                MaxRecommendedCPU = Convert.ToDecimal(x.ModifyRecommendationDetail.TargetInstances.FirstOrDefault().ExpectedResourceUtilization.EC2ResourceUtilization.MaxCpuUtilizationPercentage)
+            });
+            return cpuUsageDetails.ToList();
+        }
+
+        public async Task<GetRightsizingRecommendationResponse> GetHighRecommActivities()
+        {
+            GetRightsizingRecommendationRequest rightsizingRecommendationRequest = new GetRightsizingRecommendationRequest();
+            rightsizingRecommendationRequest.Service = "AmazonEC2";
+            var response = await costExplorerRepository.GetRightsizingRecommendation(rightsizingRecommendationRequest);
+            var highRecomActivities = response.RightsizingRecommendations.SelectMany(x => x.ModifyRecommendationDetail.TargetInstances).Select(y => new { y.ResourceDetails.EC2ResourceDetails.InstanceType, y.ResourceDetails.EC2ResourceDetails.Memory, y.ResourceDetails.EC2ResourceDetails.Vcpu });
             return response;
+        }
+
+        //Summary data
+        public async Task<CostRecommendationResponse> GetSummaryData()
+        {
+            GetRightsizingRecommendationRequest rightsizingRecommendationRequest = new GetRightsizingRecommendationRequest();
+            rightsizingRecommendationRequest.Service = "AmazonEC2";
+            var response = await costExplorerRepository.GetRightsizingRecommendation(rightsizingRecommendationRequest);
+            CostRecommendationResponse costRecommendationResponse = new CostRecommendationResponse()
+            {
+                TotalRecomCount = Convert.ToInt32(response.Summary.TotalRecommendationCount),
+                EstimatedTotalMonthlySavingsAmount= Convert.ToDecimal(response.Summary.EstimatedTotalMonthlySavingsAmount),
+                SavingsPercentage = Convert.ToDecimal(response.Summary.SavingsPercentage)
+             };
+            return costRecommendationResponse;
         }
     }
 }
+
+
+
+    
+

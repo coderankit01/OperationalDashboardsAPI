@@ -17,11 +17,34 @@ namespace OperationDashboard.Web.Api.Controllers
         {
             costRecommendationsOperations = _costRecommendationsOperations;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetMonthlyCostRecommendation()
+        [HttpGet("Savings")]
+        public async Task<IActionResult> GetMonthlyCost()
         {
-            var response = await costRecommendationsOperations.GetRightsizingRecommendation();
+            var response = await costRecommendationsOperations.GetCurrentCostRecomNSavingsCost();
             return Ok(response);
         }
+        //getting output but also fetches empty variab;les of CostRecommendationResponse Class
+        [HttpGet("CPUusage")]
+        public async Task<IActionResult> UnusedCPUusage()
+        {
+            var response = await costRecommendationsOperations.GetCPUusageDetails();
+            return Ok(response);
+        }
+
+       //getting RecommendationResponse in output
+        [HttpGet("Activities")]
+        public async Task<IActionResult> RecommendationActivities()
+        {
+            var response = await costRecommendationsOperations.GetHighRecommActivities();
+            return Ok(response);
+        }
+
+        [HttpGet("Summary")]
+        public async Task<IActionResult> RecommendationsSummary()
+        {
+            var response = await costRecommendationsOperations.GetSummaryData();
+            return Ok(response);
+        }
+
     }
 }

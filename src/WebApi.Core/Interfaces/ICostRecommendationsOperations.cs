@@ -1,4 +1,5 @@
 ﻿using Amazon.CostExplorer.Model;
+using OperationalDashboard.Web.Api.Core.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,9 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
 {
     public interface ICostRecommendationsOperations
     {
-        Task<GetRightsizingRecommendationResponse> GetRightsizingRecommendation();
+        Task<List<CostRecommendationResponse>> GetCurrentCostRecomNSavingsCost();
+        Task<List<CostRecommendationResponse>> GetCPUusageDetails();
+        Task<GetRightsizingRecommendationResponse> GetHighRecommActivities();
+        Task<CostRecommendationResponse> GetSummaryData();
     }
 }
