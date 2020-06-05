@@ -38,6 +38,9 @@ namespace OperationDashboard.Web.Api
             services.AddScoped<CostExplorerOperations>();
             services.AddScoped<ICostExplorerRepository, CostExplorerRepository>();
             services.AddScoped<ICostRecommendationsOperations, CostRecommendationsOperations>();
+            services.AddScoped<ICloudWatchRepository, CloudWatchRepository>();
+            services.AddScoped<IMonitoringOperations, CachedMonitoringOperations>();
+            services.AddScoped<MonitoringOperations>();
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddMemoryCache();
             services.AddSwaggerGen(c =>
