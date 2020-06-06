@@ -45,5 +45,9 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 return await monitortingOperations.GetMetrics(nameSpace,metric);
             });
         }
+        public async Task<MonitoringSummaryResponse> GetResourceSummary(string nameSpace)
+        {
+            return await monitortingOperations.GetResourceSummary(nameSpace);
+        }
     }
 }

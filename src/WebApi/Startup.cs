@@ -17,7 +17,9 @@ using OperationalDashboard.Web.Api.Core.Mapper;
 using OperationalDashboard.Web.Api.Core.Services;
 using OperationalDashboard.Web.Api.Infrastructure.Data.AWS;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
+using OperationDashboard.Web.Api.Extentions;
 using OperationDashboard.Web.Api.Identity;
+
 
 namespace OperationDashboard.Web.Api
 {
@@ -33,6 +35,7 @@ namespace OperationDashboard.Web.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.AddScoped<ICostExplorerOperations, CachedCostExplorerOperations>();
             services.AddScoped<CostExplorerOperations>();
@@ -48,7 +51,8 @@ namespace OperationDashboard.Web.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OperationalDashboardAPI", Version = "v1" });
                 c.OperationFilter<SwaggerHeaderFilter>();
             });
-       
+
+            
 
         }
 
@@ -60,6 +64,12 @@ namespace OperationDashboard.Web.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder => builder
+                              .AllowAnyOrigin()
+                              .AllowAnyMethod()
+                              .AllowAnyHeader()
+                              );
+            app.UseOptions();
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -78,6 +88,9 @@ namespace OperationDashboard.Web.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "OperationalDashboardAPI v1");
             });
+            
+            
+            
         }
     }
 }

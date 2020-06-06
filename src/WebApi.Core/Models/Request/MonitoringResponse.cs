@@ -14,5 +14,12 @@ namespace OperationalDashboard.Web.Api.Core.Models.Request
         public string Label { get; set; }
         public List<double> Values { get; set; }
         public List<DateTime> Timestamps { get; set; }
+        
+    }
+    public class MonitoringSummaryResponse
+    {
+        public string Label { get; set; }
+        public int Count { get; set; }
+        public List<string> ResourcesId { get; set; }
     }
 }
