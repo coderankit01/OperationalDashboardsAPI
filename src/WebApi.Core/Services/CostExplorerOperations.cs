@@ -93,6 +93,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
                                   }
             };
         }
+
         public async Task<List<CostUsageResponse>> GetCurrentMonthCost(CostUsageRequest costUsageRequest)
         {
             costUsageRequest.StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -100,15 +101,23 @@ namespace OperationalDashboard.Web.Api.Core.Services
             costUsageRequest.Granularity = "MONTHLY";
             var mapRequest = mapper.Map<GetCostAndUsageRequest>(costUsageRequest);
             var response = await costExplorerRepository.GetCostAndUsage(mapRequest);
+            var totalDays = DateTime.DaysInMonth(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1).Year, new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1).Month);
+            var currentDay = DateTime.Now.Day;
+            var lastMonthTotalCost = await GetLastMonthCost(costUsageRequest);
+            var lastMonthsAvg= lastMonthTotalCost/ totalDays;
+            var lastMonthAverageofDesiredDays = lastMonthsAvg * currentDay;
             var mapResponse = response.ResultsByTime.SelectMany(x => x.Groups).Select(amt => Convert.ToDecimal(amt.Metrics[costUsageRequest.Metrics].Amount)).Sum();
+            var currentMonthPercentageChange = ((lastMonthAverageofDesiredDays - mapResponse) / mapResponse) * 100;
             return new List<CostUsageResponse>() {
                          new CostUsageResponse()
                                   {
                                         Name = DateTime.Now.ToString("MMMM")+ "-" + DateTime.Now.Year.ToString(),
-                                        Amount = mapResponse
+                                        Amount = mapResponse,
+                                        Custom= Convert.ToString(Math.Round(currentMonthPercentageChange,2))
                                   }
             };
         }
+        //getForecastForCurrentMonth 
         public async Task<List<CostUsageResponse>> GetCostForecast(CostUsageRequest costUsageRequest)
         {
             var mapRequest = mapper.Map<GetCostForecastRequest>(costUsageRequest);
@@ -120,7 +129,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
             {
               Start= startDate,
               End= endDate
-        };
+            };  
             var response = await costExplorerRepository.GetCostForecast(mapRequest);
             var mapResponse = response.ForecastResultsByTime.Select(x => new CostUsageResponse()
             {
@@ -129,6 +138,40 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 Date= Convert.ToDateTime(x.TimePeriod.Start)
             });
             return mapResponse.ToList();
+        }
+        public async Task<List<CostUsageResponse>> GetForecastForCurrentMonth (CostUsageRequest costUsageRequest)
+        {
+            var mapRequest = mapper.Map<GetCostForecastRequest>(costUsageRequest);
+            mapRequest.Granularity = Granularity.MONTHLY;
+            mapRequest.Metric = Amazon.CostExplorer.Metric.UNBLENDED_COST;
+            string startDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            string endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            mapRequest.TimePeriod = new DateInterval()  
+            {
+                Start = startDate,
+                End = endDate
+            };
+            var response = await costExplorerRepository.GetCostForecast(mapRequest);
+            var currentMonthCost = response.Total.Amount;
+            var lastMonthCost = await GetLastMonthCost(costUsageRequest);
+            var mapResponse = response.ForecastResultsByTime.Select(x => new CostUsageResponse()
+            {
+                Name = "Current Month Cost:",
+                Amount = Convert.ToDecimal(currentMonthCost),
+                Custom = Convert.ToString(Math.Round((Convert.ToDecimal(currentMonthCost)- Convert.ToDecimal(lastMonthCost)) / Convert.ToDecimal(currentMonthCost)*100,2))
+            }) ;    
+            return mapResponse.ToList();
+        }
+        public async Task<decimal> GetLastMonthCost(CostUsageRequest costUsageRequest)
+        {
+            costUsageRequest.StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
+            costUsageRequest.EndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
+           
+            costUsageRequest.Granularity = "MONTHLY";
+            var mapRequest = mapper.Map<GetCostAndUsageRequest>(costUsageRequest);
+            var response = await costExplorerRepository.GetCostAndUsage(mapRequest);
+            var mapResponse = response.ResultsByTime.SelectMany(x => x.Groups).Select(amt => Convert.ToDecimal(amt.Metrics[costUsageRequest.Metrics].Amount)).Sum();
+            return mapResponse;
         }
     }
 }

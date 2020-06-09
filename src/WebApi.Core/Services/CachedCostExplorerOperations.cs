@@ -76,5 +76,11 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 return await costExplorerOperations.GetLinkedAccounts();
             });
         }
+        public async Task<List<CostUsageResponse>> GetForecastForCurrentMonth(CostUsageRequest costUsageRequest)
+        {
+
+            var response = await costExplorerOperations.GetForecastForCurrentMonth(costUsageRequest);
+            return response;
+        }
     }
 }

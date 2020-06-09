@@ -12,6 +12,7 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
     {
         Task<List<CostUsageResponse>> GetCostUsage(CostUsageRequest costUsageRequest);
         Task<List<CostUsageResponse>> GetCurrentMonthCost(CostUsageRequest costUsageRequest);
+        Task<List<CostUsageResponse>> GetForecastForCurrentMonth(CostUsageRequest costUsageRequest);
         Task<List<CostUsageResponse>> GetCostByMonth(CostUsageRequest costUsageRequest);
         Task<List<CostUsageResponse>> GetCurrentYearCost(CostUsageRequest costUsageRequest);
         Task<List<CostUsageResponse>> GetCostForecast(CostUsageRequest costUsageRequest);

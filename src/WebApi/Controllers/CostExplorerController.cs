@@ -68,6 +68,12 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await costExplorerOperations.GetCostForecast(costUsageRequest);
             return Ok(response);
         }
+        [HttpPost("CurrentMonthForecast")]
+        public async Task<IActionResult> GetCurrentMonthForecasts([FromBody]CostUsageRequest costUsageRequest)
+        {
+            var response = await costExplorerOperations.GetForecastForCurrentMonth(costUsageRequest);
+            return Ok(response);
+        }
 
     }
 }

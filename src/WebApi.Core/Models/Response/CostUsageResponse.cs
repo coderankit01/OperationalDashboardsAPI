@@ -10,5 +10,7 @@ namespace OperationalDashboard.Web.Api.Core.Models.Response
         public decimal Amount  { get; set; }
         public long Count { get; set; }
         public DateTime Date { get; set; }
+        public string Custom { get; set; }
+        
     }
 }
