@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Models.Request;
+using OperationDashboard.Web.Api.Identity;
 
 namespace OperationDashboard.Web.Api.Controllers
 {
+    [ApiKeyAuth]
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]    
     public class MonitoringController : ControllerBase
     {
         private static IMonitoringOperations monitoringOperations { get; set; }
@@ -26,7 +28,13 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await monitoringOperations.GetMetricsData(monitoringRequest, metrics);
             return Ok(response);
         }
-        
+        [HttpGet("Summary")]
+        public async Task<IActionResult> GetResourceSummary([FromQuery]string nameSpace)
+        {
+            var response = await monitoringOperations.GetResourceSummary(nameSpace);
+            return Ok(response);
+        }
+
 
     }
 }

@@ -75,7 +75,7 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             "AccountProvisionedReadCapacityUtilization"
 
         };
-        public static readonly string LambdaIdentifier = "UserPool";
+        public static readonly string LambdaIdentifier = "FunctionName";
         public static readonly List<string> LambdaMetrics = new List<string>()
         {
             "Duration",
@@ -97,6 +97,18 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             { "AWS/Cognito",CognitoMetrics},
             { "AWS/DynamoDB",DynamoDBMetrics},
             { "AWS/Lambda",LambdaMetrics}
+        };
+
+        public static readonly Dictionary<string, string> nameSpaceIdentifiers = new Dictionary<string, string>()
+        {
+            { "AWS/EC2",Ec2Identifier },
+            { "AWS/EBS",EBSIdentifier},
+            { "AWS/S3",S3Identifier},
+            {"AWS/RDS",RDSIdentifier },
+            { "AWS/ApiGateway",APIGatewayIdentifier},
+            { "AWS/Cognito",CognitoIdentifier},
+            { "AWS/DynamoDB",DynamoDBIdentifier},
+            { "AWS/Lambda",LambdaIdentifier}
         };
 
     }

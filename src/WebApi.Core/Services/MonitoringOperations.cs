@@ -1,6 +1,7 @@
 ﻿using Amazon.CloudWatch.Model;
 using Amazon.CostExplorer.Model;
 using AutoMapper;
+using OperationalDashboard.Web.Api.Core.Constants;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Models.Request;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
@@ -73,6 +74,35 @@ namespace OperationalDashboard.Web.Api.Core.Services
         {
             var response = await cloudWatchRepository.ListMetrics();
             return response;
+
+        }
+        public async Task<MonitoringSummaryResponse> GetResourceSummary(string nameSpace)
+        {
+            var metrics = await GetMetrics(nameSpace);
+            var nameSpaceIdentifier = MonitoringConstants.nameSpaceIdentifiers.ContainsKey(nameSpace)? MonitoringConstants.nameSpaceIdentifiers[nameSpace]:string.Empty;
+            if (string.IsNullOrEmpty(nameSpaceIdentifier))
+            {
+                return new MonitoringSummaryResponse() { Label = nameSpace, Count = 0 };
+            }
+            var resources = metrics.SelectMany(x => x.Dimensions).Where(y => y.Name.Equals(nameSpaceIdentifier)).GroupBy(z=>new { z.Value}).Select(key=>key.Key.Value).ToList();
+            return new MonitoringSummaryResponse()
+            {
+                Label = nameSpace,
+                Count = resources.Count,
+                ResourcesId = resources
+            };
+        }
+        public async Task<List<Metric>> GetMetrics(string nameSpace)
+        {
+            var request = new ListMetricsRequest() { Namespace = nameSpace };
+            var response = new ListMetricsResponse();
+            do
+            {
+                response = await cloudWatchRepository.ListMetrics(request);
+                request.NextToken = response.NextToken;
+            } while (!string.IsNullOrEmpty(request.NextToken));
+
+            return response.Metrics;
 
         }
         public async Task<List<Metric>> GetMetrics(string nameSpace,string metric)
