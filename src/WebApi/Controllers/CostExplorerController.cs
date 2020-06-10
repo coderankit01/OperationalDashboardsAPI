@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Amazon.CostExplorer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OperationalDashboard.Web.Api.Core.Extensions;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Models.Request;
 using OperationDashboard.Web.Api.Identity;
@@ -30,6 +31,10 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> GetCostUsage([FromBody]CostUsageRequest costUsageRequest)
         {
+            if (!ValidationHelper.IsValidCostUsageRequest(costUsageRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             var response = await costExplorerOperations.GetCostUsage(costUsageRequest);
             return Ok(response);
         }
@@ -44,6 +49,10 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost("CostByMonth")]
         public async Task<IActionResult> GetCostByMonth( [FromBody]CostUsageRequest costUsageRequest)
         {
+            if (!ValidationHelper.IsValidCostUsageRequest(costUsageRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             var response = await costExplorerOperations.GetCostByMonth(costUsageRequest);
             return Ok(response);
         }
@@ -51,6 +60,10 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost("CurrentMonth")]
         public async Task<IActionResult> GetCurrentMonthCost([FromBody]CostUsageRequest costUsageRequest)
         {
+            if(!ValidationHelper.IsValidCostUsageRequest(costUsageRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             var response = await costExplorerOperations.GetCurrentMonthCost(costUsageRequest);
             return Ok(response);
         }
@@ -58,6 +71,10 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost("CurrentYear")]
         public async Task<IActionResult> GetCurrentYearCost([FromBody]CostUsageRequest costUsageRequest)
         {
+            if (!ValidationHelper.IsValidCostUsageRequest(costUsageRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             var response = await costExplorerOperations.GetCurrentYearCost(costUsageRequest);
             return Ok(response);
         }
@@ -65,12 +82,20 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost("Forecast")]
         public async Task<IActionResult> GetMonthlyCostPrediction([FromBody]CostUsageRequest costUsageRequest)
         {
+            if (!ValidationHelper.IsValidCostUsageRequest(costUsageRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             var response = await costExplorerOperations.GetCostForecast(costUsageRequest);
             return Ok(response);
         }
         [HttpPost("CurrentMonthForecast")]
         public async Task<IActionResult> GetCurrentMonthForecasts([FromBody]CostUsageRequest costUsageRequest)
         {
+            if (!ValidationHelper.IsValidCostUsageRequest(costUsageRequest, out string message))
+            {
+                return BadRequest(new { Message= message});
+            }
             var response = await costExplorerOperations.GetForecastForCurrentMonth(costUsageRequest);
             return Ok(response);
         }
