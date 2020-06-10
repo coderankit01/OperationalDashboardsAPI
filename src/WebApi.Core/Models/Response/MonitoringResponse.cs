@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OperationalDashboard.Web.Api.Core.Models.Request
+namespace OperationalDashboard.Web.Api.Core.Models.Response
 {
    public class MonitoringResponse
     {

@@ -4,6 +4,7 @@ using AutoMapper;
 using OperationalDashboard.Web.Api.Core.Constants;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Models.Request;
+using OperationalDashboard.Web.Api.Core.Models.Response;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,20 @@ namespace OperationalDashboard.Web.Api.Core.Services
             mapper = _mapper;
             cloudWatchRepository = _cloudWatchRepository;
         }
-        public async Task<ListMetricsResponse> GetAllMetrics()
+        public async Task<ListMetricsResponse> GetAllMetrics(string region)
         {
+            cloudWatchRepository.Region = region;
             return await cloudWatchRepository.ListMetrics();
         }
-        private GetMetricDataRequest GenerateMetricRequest(List<Metric> metrics,DateTime startDate,DateTime endDate,string nextToken)
+        private GetMetricDataRequest GenerateMetricRequest(MonitoringRequest monitoringRequest, List<Metric> metrics)
         {
+            var startDate = DateTime.Now.AddMinutes((-1) * monitoringRequest.RelativeMinutes);
+            var endDate = DateTime.Now;
+            if (monitoringRequest.IsDateCustom)
+            {
+                startDate = monitoringRequest.StartDateTime.Value;
+                endDate = monitoringRequest.EndDateTime.Value;
+            }
             var metricQueryCollection = new List<MetricDataQuery>();
             int counter = 0;
             var period = (int)(Math.Ceiling((endDate - startDate).TotalSeconds / 12) / 60) * 60;
@@ -48,7 +57,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
             }
             return new GetMetricDataRequest()
             {
-                NextToken=nextToken,
+                NextToken= monitoringRequest.NextToken,
                 StartTimeUtc = startDate,
                 EndTimeUtc = endDate,
                 MetricDataQueries = metricQueryCollection
@@ -57,28 +66,22 @@ namespace OperationalDashboard.Web.Api.Core.Services
         }
          public async Task<MonitoringResponse> GetMetricsData(MonitoringRequest monitoringRequest, List<Metric> metrics)
         {
-            
-            var startDate = DateTime.Now.AddMinutes((-1) * monitoringRequest.RelativeMinutes);
-            var endDate = DateTime.Now;
-            if (monitoringRequest.IsDateCustom)
-            {
-                startDate = monitoringRequest.StartDateTime.Value;
-                endDate = monitoringRequest.EndDateTime.Value;
-            }
-            var metricDataRequest = GenerateMetricRequest(metrics,startDate,endDate,monitoringRequest.NextToken);
+            cloudWatchRepository.Region = monitoringRequest.Region;
+             var metricDataRequest = GenerateMetricRequest( monitoringRequest, metrics);
             var response = await cloudWatchRepository.GetMetricData(metricDataRequest);
             var mapResponse = mapper.Map<List<MonitoritingMetrics>>(response.MetricDataResults);
             return new MonitoringResponse() {NextToken=response.NextToken,MetricResponse=mapResponse };
         }
-        public async Task<ListMetricsResponse> GetMetrics()
+        public async Task<ListMetricsResponse> GetMetrics(string region)
         {
+            cloudWatchRepository.Region = region;
             var response = await cloudWatchRepository.ListMetrics();
             return response;
 
         }
-        public async Task<MonitoringSummaryResponse> GetResourceSummary(string nameSpace)
+        public async Task<MonitoringSummaryResponse> GetResourceSummary(string region,string nameSpace)
         {
-            var metrics = await GetMetrics(nameSpace);
+            var metrics = await GetMetrics(region,nameSpace);
             var nameSpaceIdentifier = MonitoringConstants.nameSpaceIdentifiers.ContainsKey(nameSpace)? MonitoringConstants.nameSpaceIdentifiers[nameSpace]:string.Empty;
             if (string.IsNullOrEmpty(nameSpaceIdentifier))
             {
@@ -92,9 +95,10 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 ResourcesId = resources
             };
         }
-        public async Task<List<Metric>> GetMetrics(string nameSpace)
+        public async Task<List<Metric>> GetMetrics(string region,string nameSpace)
         {
-            var request = new ListMetricsRequest() { Namespace = nameSpace };
+            cloudWatchRepository.Region = region;
+            var request = new ListMetricsRequest() { Namespace = nameSpace, };
             var response = new ListMetricsResponse();
             do
             {
@@ -105,9 +109,28 @@ namespace OperationalDashboard.Web.Api.Core.Services
             return response.Metrics;
 
         }
-        public async Task<List<Metric>> GetMetrics(string nameSpace,string metric)
+        public async Task<List<Metric>> GetMetrics(string region, string nameSpace,string metric)
         {
+            cloudWatchRepository.Region = region;
             var request = new ListMetricsRequest() { Namespace = nameSpace, MetricName = metric };
+            var response = new ListMetricsResponse();
+            do
+            {
+                response = await cloudWatchRepository.ListMetrics(request);
+                request.NextToken = response.NextToken;
+            } while (!string.IsNullOrEmpty(request.NextToken));
+
+            return response.Metrics;
+
+        }
+        public async Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric,string dimension)
+        {
+            cloudWatchRepository.Region = region;
+            var dimensionFilter = new List<DimensionFilter>() { new DimensionFilter() { 
+                                   Name=MonitoringConstants.nameSpaceIdentifiers[nameSpace],
+                                   Value=dimension
+            } };
+            var request = new ListMetricsRequest() { Namespace = nameSpace, MetricName = metric,Dimensions= dimensionFilter };
             var response = new ListMetricsResponse();
             do
             {

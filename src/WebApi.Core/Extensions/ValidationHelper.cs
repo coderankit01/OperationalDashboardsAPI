@@ -27,7 +27,7 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
                 message =$"Granularity is invalid:{costUsageRequest.Granularity.ToString()}, Please provide a proper Granularity. Either MONTHLY or DAILY";
                 return false;
             }
-            if( costUsageRequest.GroupBy.Any(x=> CostUsageConstants.GroupBy.Any(y=> y.Equals(x.Key))))
+            if( !costUsageRequest.GroupBy.Any(x=> CostUsageConstants.GroupBy.Any(y=> y.Equals(x.Key))))
             //(!CostUsageConstants.GroupBy.Any(x=> x.Equals(costUsageRequest.GroupBy.FirstOrDefault().Key)))
             {
                 message = $"Invalid GroupBy key value:{String.Join(",",costUsageRequest.GroupBy.Select(x=> x.Key))}, it should be { String.Join(",", CostUsageConstants.GroupBy)}";

@@ -64,7 +64,7 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             "SignUpSuccesses"
 
         };
-        public static readonly string DynamoDBIdentifier = "UserPool";
+        public static readonly string DynamoDBIdentifier = "TableName";
         public static readonly List<string> DynamoDBMetrics = new List<string>()
         {
             "AccountMaxReads",
@@ -109,6 +109,17 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             { "AWS/Cognito",CognitoIdentifier},
             { "AWS/DynamoDB",DynamoDBIdentifier},
             { "AWS/Lambda",LambdaIdentifier}
+        };
+        public static readonly Dictionary<string, string> nameSpaceAndClassMapping = new Dictionary<string, string>()
+        {
+            { "AWS/EC2","OperationalDashboard.Web.Api.Core.Services.EC2Operations" },
+            { "AWS/EBS","OperationalDashboard.Web.Api.Core.Services.EBSOperations"},
+            { "AWS/S3","OperationalDashboard.Web.Api.Core.Services.S3Operations"},
+            {"AWS/RDS","OperationalDashboard.Web.Api.Core.Services.RDSOperations" },
+            { "AWS/ApiGateway","OperationalDashboard.Web.Api.Core.Services.ApiGatewayOperations"},
+            { "AWS/Cognito","OperationalDashboard.Web.Api.Core.Services.CognitoIdentiyProviderOperations"},
+            { "AWS/DynamoDB","OperationalDashboard.Web.Api.Core.Services.DynamoDBOperations"},
+            { "AWS/Lambda","OperationalDashboard.Web.Api.Core.Services.LambdaOperations"}
         };
 
     }

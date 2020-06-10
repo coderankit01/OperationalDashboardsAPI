@@ -1,5 +1,6 @@
 ﻿using Amazon.CloudWatch.Model;
 using OperationalDashboard.Web.Api.Core.Models.Request;
+using OperationalDashboard.Web.Api.Core.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,9 +11,10 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
    public interface IMonitoringOperations
     {
         Task<MonitoringResponse> GetMetricsData(MonitoringRequest monitoringRequest, List<Metric> metrics);
-        Task<List<Metric>> GetMetrics(string nameSpace, string metric);
-        Task<ListMetricsResponse> GetMetrics();
-        Task<MonitoringSummaryResponse> GetResourceSummary(string nameSpace);
+        Task<List<Metric>> GetMetrics(string region,string nameSpace, string metric);
+        Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric, string dimension);
+        Task<ListMetricsResponse> GetMetrics(string region);
+        Task<MonitoringSummaryResponse> GetResourceSummary(string region, string nameSpace);
 
     }
 }

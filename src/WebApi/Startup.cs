@@ -37,13 +37,25 @@ namespace OperationDashboard.Web.Api
         {
             services.AddCors();
             services.AddControllers();
+         
+            services.AddScoped<ICostExplorerRepository, CostExplorerRepository>();
+            services.AddScoped<ICloudWatchRepository, CloudWatchRepository>();
+            services.AddScoped<IEC2Repository, EC2Repository>();
+            services.AddScoped<IEBSRepository, EBSRepository>();
+            services.AddScoped<IDynamoDBRepository, DynamoDBRepository>();
+            services.AddScoped<IAPIGatewayRepository, APIGatewayRepository>();
+            services.AddScoped<IS3Repository, S3Repository>();
+            services.AddScoped<ILambdaRepository, LambdaRepository>();
+            services.AddScoped<IRDSRepostitory, RDSRepostitory>();
+            services.AddScoped<ICognitoIdentityProviderRepository, CognitoIdentityProviderRepository>();
+
+            services.AddScoped<ICostRecommendationsOperations, CostRecommendationsOperations>();
             services.AddScoped<ICostExplorerOperations, CachedCostExplorerOperations>();
             services.AddScoped<CostExplorerOperations>();
-            services.AddScoped<ICostExplorerRepository, CostExplorerRepository>();
-            services.AddScoped<ICostRecommendationsOperations, CostRecommendationsOperations>();
-            services.AddScoped<ICloudWatchRepository, CloudWatchRepository>();
             services.AddScoped<IMonitoringOperations, CachedMonitoringOperations>();
             services.AddScoped<MonitoringOperations>();
+            services.AddScoped<IEC2Operations, EC2Operations>();
+
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddMemoryCache();
             services.AddSwaggerGen(c =>

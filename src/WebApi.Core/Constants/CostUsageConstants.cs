@@ -27,7 +27,9 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             "TAGS",
             "TENANCY",
             "RECORD_TYPE",
-            "USAGE_TYPE"
+            "USAGE_TYPE",
+            "DATABASE_ENGINE",
+            "REGION"
         };
         public static readonly List<string> Metrics = new List<string>
         {
