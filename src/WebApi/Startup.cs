@@ -48,6 +48,8 @@ namespace OperationDashboard.Web.Api
             services.AddScoped<ILambdaRepository, LambdaRepository>();
             services.AddScoped<IRDSRepostitory, RDSRepostitory>();
             services.AddScoped<ICognitoIdentityProviderRepository, CognitoIdentityProviderRepository>();
+            services.AddScoped<ITrustedAdvisorRepository, TrustedAdvisorRepository>();
+      
 
             services.AddScoped<ICostRecommendationsOperations, CostRecommendationsOperations>();
             services.AddScoped<ICostExplorerOperations, CachedCostExplorerOperations>();
@@ -55,6 +57,7 @@ namespace OperationDashboard.Web.Api
             services.AddScoped<IMonitoringOperations, CachedMonitoringOperations>();
             services.AddScoped<MonitoringOperations>();
             services.AddScoped<IEC2Operations, EC2Operations>();
+            services.AddScoped<ITrustedAdvisorOperations, TrustedAdvisorOperations>();
 
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddMemoryCache();
