@@ -1,5 +1,7 @@
 ﻿using Amazon.EC2.Model;
+using AutoMapper;
 using OperationalDashboard.Web.Api.Core.Interfaces;
+using OperationalDashboard.Web.Api.Core.Mapper;
 using OperationalDashboard.Web.Api.Core.Models.Request;
 using OperationalDashboard.Web.Api.Core.Models.Response;
 using OperationalDashboard.Web.Api.Infrastructure.Data.AWS;
@@ -7,6 +9,7 @@ using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,13 +30,24 @@ namespace OperationalDashboard.Web.Api.Core.Services
         {
             eC2Repository = new EC2Repository();
             eC2Repository.Region = monitoringResourceRequest.Region;
+            
             var instanceRequest = new DescribeInstancesRequest()
             {
                 InstanceIds = monitoringResourceRequest.ResourceIds,
             };
+
             var response = await eC2Repository.GetInstanceDetails(instanceRequest);
-            var value = response.Reservations.SelectMany(x=>x.Instances);
-            return value;
+            var ec2Response = response.Reservations.SelectMany(x=>x.Instances).Select(y=>new Ec2Response() { 
+            InstanceID=y.InstanceId,
+            InstanceType= y.InstanceType.Value,
+            InstanceState=y.State.Name,
+            Name=y.KeyName,
+            LaunchTime=y.LaunchTime.ToString(),
+            Platform=y.Platform,
+            SecurityGroup = String.Join(",",y.SecurityGroups.Select(z=>z.GroupName))
+            });
+            
+            return ec2Response;
         }
 
         public async Task<MonitoringSummaryResponse> GetResources(string region)

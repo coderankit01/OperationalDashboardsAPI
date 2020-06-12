@@ -13,6 +13,7 @@ namespace OperationalDashboard.Web.Api.Core.Models.Request
         public List<GroupBy> GroupBy { get; set; }
         public string Metrics { get; set; }
         public Filter Filters { get; set; }
+        public int? Limit { get; set; } = 10;
     }
     public class GroupBy
     {

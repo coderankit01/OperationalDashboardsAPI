@@ -35,6 +35,10 @@ namespace OperationalDashboard.Web.Api.Core.Services
                                          Amount = z.Sum(c => Convert.ToDecimal(c.Metrics[costUsageRequest.Metrics].Amount))
                                       }
                                      );
+            if (costUsageRequest.Limit.HasValue && costUsageRequest.Limit != -1)
+            {
+                return mapResponse.OrderByDescending(x => x.Amount).Take(costUsageRequest.Limit.Value).ToList();
+            }
             return mapResponse.ToList();
         }
         public async Task<List<CostUsageResponse>> GetLinkedAccounts()

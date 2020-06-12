@@ -29,7 +29,16 @@ namespace OperationalDashboard.Web.Api.Core.Services
            
             eBSRepository.Region = monitoringResourceRequest.Region;
             var response = await eBSRepository.GetEBS(new Amazon.EC2.Model.DescribeVolumesRequest() { VolumeIds = monitoringResourceRequest.ResourceIds });
-            var mapResponse = response.Volumes;
+            var mapResponse = response.Volumes.Select(x=>new EBSResponse() { 
+                        Name=x.Tags.FirstOrDefault(z=>z.Key.Equals("Name",StringComparison.InvariantCultureIgnoreCase))?.Value,
+                        CreatedDate=x.CreateTime.ToString(),
+                        Size=x.Size.ToString(),
+                        Snapshot=x.SnapshotId?.ToString(),
+                        VolumeID=x.VolumeId,
+                        VolumeState=x.State?.Value,
+                        VolumeType=x.VolumeType?.Value
+            
+                        });
             return mapResponse;
         }
 

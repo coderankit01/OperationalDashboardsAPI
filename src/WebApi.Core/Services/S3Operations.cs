@@ -30,6 +30,12 @@ namespace OperationalDashboard.Web.Api.Core.Services
             s3Repository = new S3Repository();
             s3Repository.Region = monitoringResourceRequest.Region;
             var response = await s3Repository.GetS3Details();
+            var mapResponse = response.Buckets.Select(x => new S3Response()
+            {
+                BucketName=x.BucketName,
+                CreatedDate=x.CreationDate.ToString(),
+                Region= monitoringResourceRequest.Region
+            });
             return response;
         }
 
