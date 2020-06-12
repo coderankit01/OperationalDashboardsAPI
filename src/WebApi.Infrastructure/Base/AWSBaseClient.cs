@@ -13,12 +13,17 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Base
         {
             get
             {
-                AWSCredentials awsCredentials;
-                if (chain.TryGetAWSCredentials("DEV", out awsCredentials))
+                var sharedFile = new SharedCredentialsFile();
+                AWSCredentials credentials=null;
+               if ( sharedFile.TryGetProfile("DEV", out var profileOptions))
                 {
-                    return awsCredentials;
+                    if (AWSCredentialsFactory.TryGetAWSCredentials(profileOptions, sharedFile, out  credentials))
+                    {
+                        return credentials;
+                    }
                 }
-                return awsCredentials;
+                return credentials;
+               
             }
         }
         public string region{ get; set; }
