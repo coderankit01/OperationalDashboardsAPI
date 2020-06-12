@@ -11,5 +11,6 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Interfaces
         string Region { get; set; }
         Task<ListTablesResponse> GetDynamoDBList();
         Task<ListTablesResponse> GetDynamoDBList(ListTablesRequest request);
+        Task<List<DescribeTableResponse>> GetDynamoDBList(List<string> tables);
     }
 }

@@ -15,6 +15,7 @@
     <PackageReference Include="AWSSDK.EC2" Version="3.3.180.1" />
     <PackageReference Include="AWSSDK.Lambda" Version="3.3.109.39" />
     <PackageReference Include="AWSSDK.RDS" Version="3.3.121.26" />
+    <PackageReference Include="AWSSDK.Route53" Version="3.3.104.19" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.111.9" />
   </ItemGroup>
 

@@ -28,7 +28,15 @@ namespace OperationalDashboard.Web.Api.Core.Services
             lambdaRepository = new LambdaRepository();
             lambdaRepository.Region = monitoringResourceRequest.Region;
             var response = await lambdaRepository.GetFunctions();
-            var filterresponse = response.Functions.Where(x => monitoringResourceRequest.ResourceIds.Any(y => y.Equals(x.FunctionName)));
+            var filterresponse = response.Functions.Where(x => monitoringResourceRequest.ResourceIds.Any(y => y.Equals(x.FunctionName))).Select(y=>new LambdaResponse() { 
+                    FunctionName=y.FunctionName,
+                    CodeSize=y.CodeSize.ToString(),
+                    Description=y.Description,
+                    LastModified=y.LastModified,
+                    Runtime=y.Runtime
+            
+            
+            } );
             return filterresponse;
         }
 

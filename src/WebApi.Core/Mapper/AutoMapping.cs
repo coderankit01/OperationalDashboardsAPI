@@ -1,6 +1,7 @@
 ﻿using Amazon.CloudWatch.Model;
 using Amazon.CostExplorer;
 using Amazon.CostExplorer.Model;
+using Amazon.EC2.Model;
 using AutoMapper;
 using OperationalDashboard.Web.Api.Core.Models.Request;
 using OperationalDashboard.Web.Api.Core.Models.Response;
@@ -35,6 +36,15 @@ namespace OperationalDashboard.Web.Api.Core.Mapper
                   .ForMember(d => d.Messages, opt => opt.Ignore());
 
             CreateMap<MetricDataResult, MonitoritingMetrics>();
+
+            CreateMap<Instance, Ec2Response>()
+                .ForMember(d => d.InstanceID, opt => opt.MapFrom(s => s.InstanceId))
+                .ForMember(d => d.InstanceType, opt => opt.MapFrom(s => s.InstanceType.Value))
+                .ForMember(d => d.InstanceState, opt => opt.MapFrom(s => s.State.Name))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.KeyName))
+                .ForMember(d => d.LaunchTime, opt => opt.MapFrom(s => s.LaunchTime.ToString()))
+                .ForMember(d => d.SecurityGroup, opt => opt.MapFrom(s => String.Join(",", s.SecurityGroups.Select(x => x.GroupName))))
+                .ForMember(d => d.Platform, opt => opt.MapFrom(s => s.Platform.Value));
         }
     }
 }

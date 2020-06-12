@@ -29,5 +29,18 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
                 return response;
             }
         }
+        public async Task<List<DescribeTableResponse>> GetDynamoDBList(List<string> tables)
+        {
+            List<DescribeTableResponse> tableResponses = new List<DescribeTableResponse>();
+            using (var dynamoDBClient = new AmazonDynamoDBClient(awsCredentials, RegionEndpoint.GetBySystemName(Region)))
+            {
+                foreach(var table in tables)
+                {
+                    var response = await dynamoDBClient.DescribeTableAsync(table);
+                    tableResponses.Add(response);
+                }
+                return tableResponses;
+            }
+        }
     }
 }
