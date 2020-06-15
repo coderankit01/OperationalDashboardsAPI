@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OperationalDashboard.Web.Api.Core.Models.Response
 {
-   public  class StateCountResponse
+   public  class AdvisorySummaryResponse
     {
         public  int OkCount { get; set; }
         public  int WarningCount { get; set; }

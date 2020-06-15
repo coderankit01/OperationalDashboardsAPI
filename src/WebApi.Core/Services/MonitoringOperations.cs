@@ -1,5 +1,6 @@
 ﻿using Amazon.CloudWatch.Model;
 using Amazon.CostExplorer.Model;
+using Amazon.S3.Model.Internal.MarshallTransformations;
 using AutoMapper;
 using OperationalDashboard.Web.Api.Core.Constants;
 using OperationalDashboard.Web.Api.Core.Interfaces;
@@ -8,7 +9,10 @@ using OperationalDashboard.Web.Api.Core.Models.Response;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -74,8 +78,64 @@ namespace OperationalDashboard.Web.Api.Core.Services
             }
             var response = await cloudWatchRepository.GetMetricData(metricDataRequest);
             var mapResponse = mapper.Map<List<MonitoritingMetrics>>(response.MetricDataResults);
+
             return new MonitoringResponse() {NextToken=response.NextToken,MetricResponse=mapResponse };
         }
+        public async Task<object> MapResponse(List<MonitoritingMetrics> monitoritingMetrics,string metricType)
+        {
+            switch (metricType)
+            {
+                case "LINE":
+                    return LineResponse(monitoritingMetrics);
+                case "BAR":
+                    return BarResponse(monitoritingMetrics);
+                case "PIE":
+                    return PieResponse(monitoritingMetrics);
+                default:
+                    return new { Name = "NA", Value = 0 };
+            }
+           
+        }
+        private object BarResponse(List<MonitoritingMetrics> monitoritingMetrics)
+        {
+            return monitoritingMetrics.FirstOrDefault().Timestamps.Select((k, i) => new { Name=k.ToString(), Value = monitoritingMetrics.FirstOrDefault().Values[i] });
+        }
+        private object PieResponse(List<MonitoritingMetrics> monitoritingMetrics)
+        {
+           return monitoritingMetrics.Select(x => new { Name = x.Label, Value = x.Values.Sum() });
+        }
+        private object LineResponse(List<MonitoritingMetrics> monitoritingMetrics)
+        {
+            string variableName = "val";
+            int count = 0;
+            List<object> summaryObject = new List<object>();
+            List<Dictionary<string, double>> mapResponses = new List<Dictionary<string, double>>();
+            foreach (var monitor in monitoritingMetrics)
+            {
+                summaryObject.Add(new { Name = monitor.Label, Value = variableName + count.ToString() });
+                var mapresponse = monitor.Timestamps.Select((k, i) => new { k, v = monitor.Values[i] })
+              .ToDictionary(x => x.k.ToString() + "~" + variableName + count.ToString(), x => x.v);
+
+                mapResponses.Add(mapresponse);
+                count++;
+            }
+
+            var timestamps = monitoritingMetrics.SelectMany(x => x.Timestamps.Select(y => y.ToString())).GroupBy(x => x).Select(t => t.Key.ToString());
+            var expandObjs = new List<IDictionary<string, Object>>();
+            foreach (var timestamp in timestamps.OrderByDescending(x => Convert.ToDateTime(x)))
+            {
+                var splitObjects = mapResponses.SelectMany(y => y).Where(x => x.Key.Split('~')[0] == timestamp);
+                var expandObj = new ExpandoObject() as IDictionary<string, Object>;
+                expandObj.Add("timestamp", timestamp);
+                foreach (var _object in splitObjects)
+                {
+                    expandObj.Add(_object.Key.Split('~')[1], _object.Value);
+
+                }
+                expandObjs.Add(expandObj);
+            }
+            return new { result = expandObjs, summary = summaryObject };
+        } 
         public async Task<ListMetricsResponse> GetMetrics(string region)
         {
             cloudWatchRepository.Region = region;
@@ -135,6 +195,28 @@ namespace OperationalDashboard.Web.Api.Core.Services
                                    Value=dimension
             } };
             var request = new ListMetricsRequest() { Namespace = nameSpace, MetricName = metric,Dimensions= dimensionFilter };
+            var response = new ListMetricsResponse();
+            do
+            {
+                response = await cloudWatchRepository.ListMetrics(request);
+                request.NextToken = response.NextToken;
+            } while (!string.IsNullOrEmpty(request.NextToken));
+
+            return response.Metrics;
+
+        }
+        public async Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric, List<string> dimensions)
+        {
+            cloudWatchRepository.Region = region;
+            var dimensionFilter = new List<DimensionFilter>();
+            dimensions.ForEach(x => {
+                dimensionFilter.Add(new DimensionFilter()
+                {
+                    Name = MonitoringConstants.nameSpaceIdentifiers[nameSpace],
+                    Value = x
+                });
+            });
+            var request = new ListMetricsRequest() { Namespace = nameSpace, MetricName = metric, Dimensions = dimensionFilter };
             var response = new ListMetricsResponse();
             do
             {

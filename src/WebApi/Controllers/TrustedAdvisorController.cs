@@ -25,28 +25,22 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await trustedAdvisorOperations.TrustedAdvisorChecks(language);
             return Ok(response);
         }
-        [HttpGet("AdvisorCheck")]
-        public async Task<IActionResult> AdvisorCheck([FromQuery]string checkID, string language)
-        {
-            var response = await trustedAdvisorOperations.TrustedAdvisorCheckResult(checkID, language);
-            return Ok(response);
-        }
-        [HttpGet("AdvisorCheckSummary")]
-        public async Task<IActionResult> CheckSummary([FromBody] List<string> checkIDs)
-        {
-            var response = await trustedAdvisorOperations.TrustedAdvisorCheckSummary(checkIDs);
-            return Ok(response);
-        }
-        [HttpGet("CheckStatusCount")]
+        [HttpGet("Summary")]
         public async Task<IActionResult> CheckStatusCount([FromQuery]string Category)
         {
-            var response = await trustedAdvisorOperations.GetStateCount(Category);
+            var response = await trustedAdvisorOperations.GetAdvisorySummary(Category);
             return Ok(response);
         }
-        [HttpGet("GetChecksList")]
-        public async Task<IActionResult> ChecksList([FromQuery]string Category)
+        [HttpGet("Recommendations")]
+        public async Task<IActionResult> GetResourceRecommendation([FromQuery]string Category)
         {
-           var response = await trustedAdvisorOperations.GetRecommendations(Category);
+           var response = await trustedAdvisorOperations.GetResourceRecommendation(Category);
+            return Ok(response);
+        }
+        [HttpGet("Resources")]
+        public async Task<IActionResult> GetResourceDetails([FromQuery]string CheckId)
+        {
+            var response = await trustedAdvisorOperations.GetResourceDetails(CheckId);
             return Ok(response);
         }
     } 

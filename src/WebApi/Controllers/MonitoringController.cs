@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.S3.Model.Internal.MarshallTransformations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OperationalDashboard.Web.Api.Core.Extensions;
@@ -25,18 +26,25 @@ namespace OperationDashboard.Web.Api.Controllers
         }
 
         [HttpPost("Metrics")]
-        public async Task<IActionResult> GetMetrics([FromBody]MonitoringRequest monitoringRequest)
+        public async Task<IActionResult> GetMetrics([FromBody]MonitoringRequest monitoringRequest,[FromQuery]string MetricType)
         {
             var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics);
-            var response = await monitoringOperations.GetMetricsData(monitoringRequest, metrics);
-            return Ok(response);
+            var filterMetrics = metrics.Where(x => monitoringRequest.ResourceIds.Any(y => x.Dimensions.Any(z => z.Value.Equals(y)))).ToList() ;
+            var response = await monitoringOperations.GetMetricsData(monitoringRequest, filterMetrics);
+            if (!response.MetricResponse.Any())
+            {
+                return NoContent();
+            }
+            var mapResponse = await monitoringOperations.MapResponse(response.MetricResponse, MetricType);
+            return Ok(mapResponse);
         }
 
         [HttpPost("Metric")]
         public async Task<IActionResult> GetMetric([FromBody]MonitoringRequest monitoringRequest)
         {
-            var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics,monitoringRequest.Value);
+            var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics,monitoringRequest.ResourceIds.FirstOrDefault());
             var response = await monitoringOperations.GetMetricsData(monitoringRequest, metrics);
+
             return Ok(response);
         }
 

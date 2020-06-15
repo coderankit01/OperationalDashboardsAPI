@@ -13,8 +13,10 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
         Task<MonitoringResponse> GetMetricsData(MonitoringRequest monitoringRequest, List<Metric> metrics);
         Task<List<Metric>> GetMetrics(string region,string nameSpace, string metric);
         Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric, string dimension);
+        Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric, List<string> dimensions);
         Task<ListMetricsResponse> GetMetrics(string region);
         Task<MonitoringSummaryResponse> GetResourceSummary(string region, string nameSpace);
+        Task<object> MapResponse(List<MonitoritingMetrics> monitoritingMetrics, string metricType);
 
     }
 }

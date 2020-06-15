@@ -12,7 +12,8 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
         Task<DescribeTrustedAdvisorChecksResponse> TrustedAdvisorChecks(string language);
         Task<DescribeTrustedAdvisorCheckResultResponse> TrustedAdvisorCheckResult(string checkID, string language);
         Task<DescribeTrustedAdvisorCheckSummariesResponse> TrustedAdvisorCheckSummary(List<string> checkIDs);
-        Task<StateCountResponse> GetStateCount(string Category);
-        Task<List<CheckRecommResponse>> GetRecommendations(string Category);
+        Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string Category);
+        Task<AdvisorySummaryResponse> GetAdvisorySummary(string Category);
+        Task<object> GetResourceDetails(string checkID);
     }
 }

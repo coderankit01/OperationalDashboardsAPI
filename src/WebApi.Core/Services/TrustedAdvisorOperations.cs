@@ -44,12 +44,12 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var response = await trustedAdvisorRepository.GetTrustedAdvisorCheckSummary(describeTrustedAdvisorCheckSummariesRequest);
             return response;
         }
-        public async Task<StateCountResponse> GetStateCount(string Category)
+        public async Task<AdvisorySummaryResponse> GetAdvisorySummary(string Category)
         {
             var response = await TrustedAdvisorChecks("en");
             var mapResponse = response.Checks.Where(x => x.Category.Equals(Category)).Select(y => y.Id).ToList();
             var stateResponse = await TrustedAdvisorCheckSummary(mapResponse);
-            StateCountResponse stateCountResponse = new StateCountResponse()
+            AdvisorySummaryResponse stateCountResponse = new AdvisorySummaryResponse()
             {
                 WarningCount = stateResponse.Summaries.Where(x => x.Status.Equals("warning")).Count(),
                 OkCount = stateResponse.Summaries.Where(x => x.Status.Equals("ok")).Count(),
@@ -58,22 +58,32 @@ namespace OperationalDashboard.Web.Api.Core.Services
             };
             return stateCountResponse;
         }
-        public async Task<List<CheckRecommResponse>> GetRecommendations(string Category)
+        public async Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string Category)
         {
             var response = await TrustedAdvisorChecks("en");
             var mapResponse = response.Checks.Where(x => x.Category.Equals(Category)).Select(y => y.Id).ToList();
+            var details = response.Checks.Select(x => x.Metadata);
             var stateResponse = await TrustedAdvisorCheckSummary(mapResponse);
             var temp = stateResponse.Summaries.Where(x => x.Status.Equals("warning") || x.Status.Equals("error")).Select(y => y.CheckId).ToList();
             var checkDictionaray = stateResponse.Summaries.ToDictionary(x => x.CheckId, x => x.ResourcesSummary?.ResourcesFlagged);
-            var currentResponse = response.Checks.Where(x => temp.Any(y => y.Equals(x.Id))).Select(z => new CheckRecommResponse()
+            var currentResponse = response.Checks.Where(x => temp.Any(y => y.Equals(x.Id))).Select(z => new ResourceRecommendationResponse()
             {
+                CheckId=z.Id,
                 CheckName = z.Name,
                 Recommendation = z.Description,
                 ResourceCount= Convert.ToInt32(checkDictionaray[z.Id])
-            });
-
-            
+            }); 
            return currentResponse.ToList();
+        }
+        public async Task<object> GetResourceDetails(string checkID)
+        {
+            var response = await TrustedAdvisorChecks("en");
+            var mapResponse = response.Checks.FirstOrDefault(x => x.Id.Equals(checkID)).Metadata;
+            var details = response.Checks.Select(x => x.Metadata);
+            var stateResponse = await TrustedAdvisorCheckResult(checkID,"en");
+            var resourceDetails= stateResponse.Result.FlaggedResources.Select(x => x.Metadata.Select((z, i) => new { index = i, value = z }).ToDictionary(key => mapResponse[key.index], value => value.value));
+            
+            return resourceDetails;
         }
     }
 }
