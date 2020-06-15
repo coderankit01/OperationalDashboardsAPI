@@ -68,6 +68,10 @@ namespace OperationalDashboard.Web.Api.Core.Services
         {
             cloudWatchRepository.Region = monitoringRequest.Region;
              var metricDataRequest = GenerateMetricRequest( monitoringRequest, metrics);
+            if (!metricDataRequest.MetricDataQueries.Any())
+            {
+                return new MonitoringResponse();
+            }
             var response = await cloudWatchRepository.GetMetricData(metricDataRequest);
             var mapResponse = mapper.Map<List<MonitoritingMetrics>>(response.MetricDataResults);
             return new MonitoringResponse() {NextToken=response.NextToken,MetricResponse=mapResponse };

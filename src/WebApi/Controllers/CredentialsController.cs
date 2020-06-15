@@ -42,10 +42,18 @@ namespace OperationDashboard.Web.Api.Controllers
                 CredentialProfile basicProfile;
                 if (netSDKFile.TryGetProfile(aWSCredentials.ProfileName, out basicProfile))
                 {
-                    basicProfile.Options.AccessKey = aWSCredentials.AccessKey;
-                    basicProfile.Options.SecretKey = aWSCredentials.SecretKey;
+                   // basicProfile.Options.AccessKey = aWSCredentials.AccessKey;
+                    //basicProfile.Options.SecretKey = aWSCredentials.SecretKey;
 
-                    netSDKFile.RegisterProfile(basicProfile);
+                    netSDKFile.UnregisterProfile(aWSCredentials.ProfileName);
+                    CredentialProfileOptions options = new CredentialProfileOptions()
+                    {
+                        AccessKey = aWSCredentials.AccessKey,
+                        SecretKey = aWSCredentials.SecretKey
+                    };
+                    var profile = new CredentialProfile(aWSCredentials.ProfileName, options);
+                    netSDKFile = new SharedCredentialsFile();
+                    netSDKFile.RegisterProfile(profile);
                 }
                 else
                 {
@@ -71,11 +79,11 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProfile([FromQuery]string profile)
         {
-            var chain = new CredentialProfileStoreChain();
-            AWSCredentials awsCredentials;
-            if (chain.TryGetAWSCredentials(profile, out awsCredentials))
+            var sharedFile = new SharedCredentialsFile();
+            sharedFile.TryGetProfile(profile, out var profileOptions);
+            if(AWSCredentialsFactory.TryGetAWSCredentials(profileOptions, sharedFile, out var credentials))
             {
-                var cred = await awsCredentials.GetCredentialsAsync();
+                var cred = await credentials.GetCredentialsAsync();
                 var accessKey = cred.AccessKey.Substring(0, cred.AccessKey.Length - 3) + "***";
                 var secretKey = cred.SecretKey.Substring(0, cred.SecretKey.Length - 3) + "***";
                 return Ok(new { AccessKey = accessKey, SecretKey = secretKey });

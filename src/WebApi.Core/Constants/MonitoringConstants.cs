@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Amazon.CloudWatch;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -86,7 +87,11 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             "UnreservedConcurrentExecutions"
 
         };
-
+        public static readonly string Route53Identifier = "HostedZoneId";
+        public static readonly List<string> Route53Metrics = new List<string>()
+        {
+            "DNSQueries"
+        };
         public static readonly Dictionary<string, List<string>> nameSpaceAndMetrics = new Dictionary<string, List<string>>()
         {
             { "AWS/EC2",Ec2Metrics },
@@ -96,7 +101,8 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             { "AWS/ApiGateway",APIGatewayMetrics},
             { "AWS/Cognito",CognitoMetrics},
             { "AWS/DynamoDB",DynamoDBMetrics},
-            { "AWS/Lambda",LambdaMetrics}
+            { "AWS/Lambda",LambdaMetrics},
+            { "AWS/Route53",Route53Metrics}
         };
 
         public static readonly Dictionary<string, string> nameSpaceIdentifiers = new Dictionary<string, string>()
@@ -108,7 +114,8 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             { "AWS/ApiGateway",APIGatewayIdentifier},
             { "AWS/Cognito",CognitoIdentifier},
             { "AWS/DynamoDB",DynamoDBIdentifier},
-            { "AWS/Lambda",LambdaIdentifier}
+            { "AWS/Lambda",LambdaIdentifier},
+            { "AWS/Route53",Route53Identifier}
         };
         public static readonly Dictionary<string, string> nameSpaceAndClassMapping = new Dictionary<string, string>()
         {
@@ -119,7 +126,8 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             { "AWS/ApiGateway","OperationalDashboard.Web.Api.Core.Services.ApiGatewayOperations"},
             { "AWS/Cognito","OperationalDashboard.Web.Api.Core.Services.CognitoIdentiyProviderOperations"},
             { "AWS/DynamoDB","OperationalDashboard.Web.Api.Core.Services.DynamoDBOperations"},
-            { "AWS/Lambda","OperationalDashboard.Web.Api.Core.Services.LambdaOperations"}
+            { "AWS/Lambda","OperationalDashboard.Web.Api.Core.Services.LambdaOperations"},
+            { "AWS/Route53","OperationalDashboard.Web.Api.Core.Services.Route53Operations"}
         };
 
     }

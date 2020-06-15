@@ -6,28 +6,38 @@ using System.Threading.Tasks;
 using Amazon;
 using Amazon.CostExplorer;
 using Amazon.CostExplorer.Model;
+using OperationalDashboard.Web.Api.Infrastructure.Base;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 
 namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
 {
-    public class CostExplorerRepository : ICostExplorerRepository
+    public class CostExplorerRepository :AWSBaseClient, ICostExplorerRepository
     {
-        AmazonCostExplorerClient amazonCostExplorerClient = new AmazonCostExplorerClient("AKIA5SR5QSU3R352WQ6J", "yw4CqQmLlB7CdCKz06Cv2LIsWfLe9AQVvxk8HmKL", RegionEndpoint.GetBySystemName("ap-southeast-1"));
         public async Task<GetCostAndUsageResponse> GetCostAndUsage(GetCostAndUsageRequest costUsageRequest)
         {
-            var response = await amazonCostExplorerClient.GetCostAndUsageAsync(costUsageRequest);
-            return response;
+            using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
+            {
+                var response = await amazonCostExplorerClient.GetCostAndUsageAsync(costUsageRequest);
+                return response;
+            }
+               
         }
         public async Task<GetCostForecastResponse> GetCostForecast(GetCostForecastRequest costForecastRequest)
         {
-            var response = await amazonCostExplorerClient.GetCostForecastAsync(costForecastRequest);
-            return response;
+            using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
+            {
+                var response = await amazonCostExplorerClient.GetCostForecastAsync(costForecastRequest);
+                return response;
+            }
         }
 
         public async Task<GetRightsizingRecommendationResponse> GetRightsizingRecommendation(GetRightsizingRecommendationRequest rightsizingRecommendationRequest)
         {
-            var response = await amazonCostExplorerClient.GetRightsizingRecommendationAsync(rightsizingRecommendationRequest);
-            return response;
+            using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
+            {
+                var response = await amazonCostExplorerClient.GetRightsizingRecommendationAsync(rightsizingRecommendationRequest);
+                return response;
+            }
         }
     }
 
