@@ -27,7 +27,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var response = await trustedAdvisorRepository.GetTrustedAdvisorChecks(describeTrustedAdvisorChecksRequest);
             return response;
         }
-        public async Task<DescribeTrustedAdvisorCheckResultResponse> TrustedAdvisorCheckResult(string checkID, string language)
+        private async Task<DescribeTrustedAdvisorCheckResultResponse> TrustedAdvisorCheckResult(string checkID, string language)
         {
             trustedAdvisorRepository.Region = "us-east-1";
             DescribeTrustedAdvisorCheckResultRequest describeTrustedAdvisorCheckResultRequest = new DescribeTrustedAdvisorCheckResultRequest();
@@ -36,7 +36,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var response = await trustedAdvisorRepository.GetTrustedAdvisorCheckResult(describeTrustedAdvisorCheckResultRequest);
             return response;
         }
-        public async Task<DescribeTrustedAdvisorCheckSummariesResponse> TrustedAdvisorCheckSummary(List<string> checkIDs)
+        private async Task<DescribeTrustedAdvisorCheckSummariesResponse> TrustedAdvisorCheckSummary(List<string> checkIDs)
         {
             trustedAdvisorRepository.Region = "us-east-1";
             DescribeTrustedAdvisorCheckSummariesRequest describeTrustedAdvisorCheckSummariesRequest = new DescribeTrustedAdvisorCheckSummariesRequest();
@@ -44,10 +44,10 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var response = await trustedAdvisorRepository.GetTrustedAdvisorCheckSummary(describeTrustedAdvisorCheckSummariesRequest);
             return response;
         }
-        public async Task<AdvisorySummaryResponse> GetAdvisorySummary(string Category)
+        public async Task<AdvisorySummaryResponse> GetAdvisorySummary(string category)
         {
-            var response = await TrustedAdvisorChecks("en");
-            var mapResponse = response.Checks.Where(x => x.Category.Equals(Category)).Select(y => y.Id).ToList();
+            var response = await  TrustedAdvisorChecks("en");
+            var mapResponse = response.Checks.Where(x => x.Category.Equals(category)).Select(y => y.Id).ToList();
             var stateResponse = await TrustedAdvisorCheckSummary(mapResponse);
             AdvisorySummaryResponse stateCountResponse = new AdvisorySummaryResponse()
             {
@@ -58,11 +58,10 @@ namespace OperationalDashboard.Web.Api.Core.Services
             };
             return stateCountResponse;
         }
-        public async Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string Category)
+        public async Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string category)
         {
             var response = await TrustedAdvisorChecks("en");
-            var mapResponse = response.Checks.Where(x => x.Category.Equals(Category)).Select(y => y.Id).ToList();
-            var details = response.Checks.Select(x => x.Metadata);
+            var mapResponse = response.Checks.Where(x => x.Category.Equals(category)).Select(y => y.Id).ToList();
             var stateResponse = await TrustedAdvisorCheckSummary(mapResponse);
             var temp = stateResponse.Summaries.Where(x => x.Status.Equals("warning") || x.Status.Equals("error")).Select(y => y.CheckId).ToList();
             var checkDictionaray = stateResponse.Summaries.ToDictionary(x => x.CheckId, x => x.ResourcesSummary?.ResourcesFlagged);

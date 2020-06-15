@@ -12,18 +12,12 @@ namespace OperationDashboard.Web.Api.Controllers
     [ApiKeyAuth]
     [Route("api/[controller]")]
     [ApiController]
-    public class TrustedAdvisorController : ControllerBase
+    public class ChecksController : ControllerBase
     {
         private static ITrustedAdvisorOperations trustedAdvisorOperations { get; set; }
-        public TrustedAdvisorController( ITrustedAdvisorOperations _trustedAdvisorOperations)
+        public ChecksController( ITrustedAdvisorOperations _trustedAdvisorOperations)
         {
             trustedAdvisorOperations = _trustedAdvisorOperations;
-        }
-        [HttpGet("Checks")]
-        public async Task<IActionResult> GetChecks([FromQuery]string language)
-        {
-            var response = await trustedAdvisorOperations.TrustedAdvisorChecks(language);
-            return Ok(response);
         }
         [HttpGet("Summary")]
         public async Task<IActionResult> CheckStatusCount([FromQuery]string Category)

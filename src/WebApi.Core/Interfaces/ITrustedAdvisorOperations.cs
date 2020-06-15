@@ -10,10 +10,8 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
     public interface ITrustedAdvisorOperations
     {
         Task<DescribeTrustedAdvisorChecksResponse> TrustedAdvisorChecks(string language);
-        Task<DescribeTrustedAdvisorCheckResultResponse> TrustedAdvisorCheckResult(string checkID, string language);
-        Task<DescribeTrustedAdvisorCheckSummariesResponse> TrustedAdvisorCheckSummary(List<string> checkIDs);
-        Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string Category);
-        Task<AdvisorySummaryResponse> GetAdvisorySummary(string Category);
+        Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string category);
+        Task<AdvisorySummaryResponse> GetAdvisorySummary(string category);
         Task<object> GetResourceDetails(string checkID);
     }
 }
