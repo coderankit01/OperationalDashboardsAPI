@@ -37,5 +37,17 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await trustedAdvisorOperations.TrustedAdvisorCheckSummary(checkIDs);
             return Ok(response);
         }
-    }
+        [HttpGet("CheckStatusCount")]
+        public async Task<IActionResult> CheckStatusCount([FromQuery]string Category)
+        {
+            var response = await trustedAdvisorOperations.GetStateCount(Category);
+            return Ok(response);
+        }
+        [HttpGet("GetChecksList")]
+        public async Task<IActionResult> ChecksList([FromQuery]string Category)
+        {
+           var response = await trustedAdvisorOperations.GetRecommendations(Category);
+            return Ok(response);
+        }
+    } 
 }
