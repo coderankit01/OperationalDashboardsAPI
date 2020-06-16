@@ -74,7 +74,9 @@ namespace OperationalDashboard.Web.Api.Core.Services
              var metricDataRequest = GenerateMetricRequest( monitoringRequest, metrics);
             if (!metricDataRequest.MetricDataQueries.Any())
             {
-                return new MonitoringResponse();
+                return new MonitoringResponse() { 
+                MetricResponse = new List<MonitoritingMetrics>()
+                };
             }
             var response = await cloudWatchRepository.GetMetricData(metricDataRequest);
             var mapResponse = mapper.Map<List<MonitoritingMetrics>>(response.MetricDataResults);

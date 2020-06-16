@@ -15,7 +15,8 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
     {
         public async Task<GetCostAndUsageResponse> GetCostAndUsage(GetCostAndUsageRequest costUsageRequest)
         {
-            using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
+            using (var amazonCostExplorerClient = new AmazonCostExplorerClient("AKIA5SR5QSU3R352WQ6J", "yw4CqQmLlB7CdCKz06Cv2LIsWfLe9AQVvxk8HmKL", RegionEndpoint.GetBySystemName("us-east-1")))
+            //using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
             {
                 var response = await amazonCostExplorerClient.GetCostAndUsageAsync(costUsageRequest);
                 return response;
@@ -24,7 +25,8 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
         }
         public async Task<GetCostForecastResponse> GetCostForecast(GetCostForecastRequest costForecastRequest)
         {
-            using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
+            using (var amazonCostExplorerClient = new AmazonCostExplorerClient("AKIA5SR5QSU3R352WQ6J", "yw4CqQmLlB7CdCKz06Cv2LIsWfLe9AQVvxk8HmKL", RegionEndpoint.GetBySystemName("us-east-1")))
+            //using (var amazonCostExplorerClient = new AmazonCostExplorerClient(awsCredentials, RegionEndpoint.GetBySystemName("us-east-1")))
             {
                 var response = await amazonCostExplorerClient.GetCostForecastAsync(costForecastRequest);
                 return response;

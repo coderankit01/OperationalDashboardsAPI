@@ -53,7 +53,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
             {
                 WarningCount = stateResponse.Summaries.Where(x => x.Status.Equals("warning")).Count(),
                 OkCount = stateResponse.Summaries.Where(x => x.Status.Equals("ok")).Count(),
-                ErrorCount = stateResponse.Summaries.Where(x => x.Status.Equals("critical")).Count(),
+                ErrorCount = stateResponse.Summaries.Where(x => x.Status.Equals("error")).Count(),
                 NotAvailableCount = stateResponse.Summaries.Where(x => x.Status.Equals("not_available")).Count()
             };
             return stateCountResponse;
