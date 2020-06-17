@@ -129,10 +129,29 @@ namespace OperationalDashboard.Web.Api.Core.Constants
             { "AWS/Lambda","OperationalDashboard.Web.Api.Core.Services.LambdaOperations"},
             { "AWS/Route53","OperationalDashboard.Web.Api.Core.Services.Route53Operations"}
         };
-
+        //line pie bar, namespace, sd ed
+        public static readonly List<string> NameSpace = new List<string>()
+        {
+            "AWS/EC2",
+            "AWS/EBS",
+            "AWS/S3",
+            "AWS/RDS",
+            "AWS/ApiGateway",
+            "AWS/Cognito",
+            "AWS/DynamoDB",
+            "AWS/Lambda",
+            "AWS/Route53"
+        };
+        public static readonly List<string> MetricType = new List<string>()
+        {
+            "LINE",
+            "PIE",
+            "BAR"
+        };
+      
     }
     
-
+     
 
         
 
