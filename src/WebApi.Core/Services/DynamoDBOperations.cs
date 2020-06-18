@@ -30,11 +30,11 @@ namespace OperationalDashboard.Web.Api.Core.Services
            
             var response = await dynamoDBRepository.GetDynamoDBList(monitoringResourceRequest.ResourceIds);
             var filterResponse = response.Select(x=>x.Table).Select(x => new DynamoDBResponse() {
-                     Indexes=String.Join(",",x.GlobalSecondaryIndexes.Select(y=>y.IndexName)),
-                     PartitionKey=x.KeySchema.FirstOrDefault(y=>y.KeyType.Value.Equals("partition key")).AttributeName,
+                     Indexes=String.Join(",",x.GlobalSecondaryIndexes?.Select(y=>y.IndexName)),
+                     PartitionKey=x.KeySchema?.FirstOrDefault(y=>y.KeyType.Value.Equals("partition key"))?.AttributeName,
                      Name=x.TableName,
-                     SortKey= x.KeySchema.FirstOrDefault(y => y.KeyType.Value.Equals("sort key")).AttributeName,
-                     Status=x.TableStatus.Value,
+                     SortKey= x.KeySchema?.FirstOrDefault(y => y.KeyType.Value.Equals("sort key"))?.AttributeName,
+                     Status=x.TableStatus?.Value,
                      TableSize=x.TableSizeBytes.ToString(),
                      CreatedDate=x.CreationDateTime.ToString()
             } );

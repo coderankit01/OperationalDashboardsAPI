@@ -58,9 +58,9 @@ namespace OperationalDashboard.Web.Api.Core.Services
         {
             return await monitortingOperations.GetMetrics(region, nameSpace, metric, dimensions);
         }
-        public async Task<object> MapResponse(List<MonitoritingMetrics> monitoritingMetrics,string metricType)
+        public  object MapResponse(List<MonitoritingMetrics> monitoritingMetrics,string metricType,int? limit)
         {
-            return await monitortingOperations.MapResponse(monitoritingMetrics, metricType);
+            return  monitortingOperations.MapResponse(monitoritingMetrics, metricType,limit);
         }
     }
 }

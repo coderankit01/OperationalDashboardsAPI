@@ -35,19 +35,9 @@ namespace OperationDashboard.Web.Api.Controllers
             {
                 return NoContent();
             }
-            var mapResponse = await monitoringOperations.MapResponse(response.MetricResponse, MetricType);
+            var mapResponse = monitoringOperations.MapResponse(response.MetricResponse, MetricType, monitoringRequest.Limit);
             return Ok(mapResponse);
         }
-
-        [HttpPost("Metric")]
-        public async Task<IActionResult> GetMetric([FromBody]MonitoringRequest monitoringRequest)
-        {
-            var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics,monitoringRequest.ResourceIds.FirstOrDefault());
-            var response = await monitoringOperations.GetMetricsData(monitoringRequest, metrics);
-
-            return Ok(response);
-        }
-
         [HttpGet("Summary")]
         public async Task<IActionResult> GetResourceSummary([FromQuery]string nameSpace,[FromQuery]string region)
         {

@@ -16,7 +16,7 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
         Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric, List<string> dimensions);
         Task<ListMetricsResponse> GetMetrics(string region);
         Task<MonitoringSummaryResponse> GetResourceSummary(string region, string nameSpace);
-        Task<object> MapResponse(List<MonitoritingMetrics> monitoritingMetrics, string metricType);
+        object MapResponse(List<MonitoritingMetrics> monitoritingMetrics, string metricType,int? limit);
 
     }
 }

@@ -83,36 +83,48 @@ namespace OperationalDashboard.Web.Api.Core.Services
 
             return new MonitoringResponse() {NextToken=response.NextToken,MetricResponse=mapResponse };
         }
-        public async Task<object> MapResponse(List<MonitoritingMetrics> monitoritingMetrics,string metricType)
+        public  object MapResponse(List<MonitoritingMetrics> monitoritingMetrics,string metricType,int? limit)
         {
             switch (metricType)
             {
                 case "LINE":
-                    return LineResponse(monitoritingMetrics);
+                    return LineResponse(monitoritingMetrics,limit);
                 case "BAR":
-                    return BarResponse(monitoritingMetrics);
+                    return BarResponse(monitoritingMetrics,limit);
                 case "PIE":
-                    return PieResponse(monitoritingMetrics);
+                    return PieResponse(monitoritingMetrics,limit);
                 default:
                     return new { Name = "NA", Value = 0 };
             }
            
         }
-        private object BarResponse(List<MonitoritingMetrics> monitoritingMetrics)
+        private object BarResponse(List<MonitoritingMetrics> monitoritingMetrics,int? limit)
         {
-            return monitoritingMetrics.FirstOrDefault().Timestamps.Select((k, i) => new { Name=k.ToString(), Value = monitoritingMetrics.FirstOrDefault().Values[i] });
+            if(limit.HasValue && limit != -1)
+            {
+                monitoritingMetrics.FirstOrDefault().Timestamps.Select((k, i) => new { Name = k.ToString(), Value = Math.Round(monitoritingMetrics.FirstOrDefault().Values[i], 2) }).OrderByDescending(o => o.Value).Take(limit.Value);
+            }
+            return monitoritingMetrics.FirstOrDefault().Timestamps.Select((k, i) => new { Name=k.ToString(), Value = Math.Round( monitoritingMetrics.FirstOrDefault().Values[i],2 )});
         }
-        private object PieResponse(List<MonitoritingMetrics> monitoritingMetrics)
+        private object PieResponse(List<MonitoritingMetrics> monitoritingMetrics, int? limit)
         {
-           return monitoritingMetrics.Select(x => new { Name = x.Label, Value = x.Values.Sum() });
+            if (limit.HasValue && limit != -1)
+            {
+                return monitoritingMetrics.Select(x => new { Name = x.Label, Value = Math.Round(x.Values.Sum(), 2) }).OrderByDescending(o => o.Value).Take(limit.Value);
+            }
+                return monitoritingMetrics.Select(x => new { Name = x.Label, Value = Math.Round(x.Values.Sum(),2) }).OrderByDescending(o=>o.Value);
         }
-        private object LineResponse(List<MonitoritingMetrics> monitoritingMetrics)
+        private object LineResponse(List<MonitoritingMetrics> monitoritingMetrics, int? limit)
         {
             string variableName = "val";
             int count = 0;
             List<object> summaryObject = new List<object>();
             List<Dictionary<string, double>> mapResponses = new List<Dictionary<string, double>>();
-            foreach (var monitor in monitoritingMetrics)
+            if (limit.HasValue && limit != -1)
+            {
+                monitoritingMetrics= monitoritingMetrics.Take(limit.Value).ToList();
+            }
+                foreach (var monitor in monitoritingMetrics)
             {
                 summaryObject.Add(new { Name = monitor.Label, Value = variableName + count.ToString() });
                 var mapresponse = monitor.Timestamps.Select((k, i) => new { k, v = monitor.Values[i] })
@@ -131,7 +143,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 expandObj.Add("timestamp", timestamp);
                 foreach (var _object in splitObjects)
                 {
-                    expandObj.Add(_object.Key.Split('~')[1], _object.Value);
+                    expandObj.Add(_object.Key.Split('~')[1], Math.Round(_object.Value,2));
 
                 }
                 expandObjs.Add(expandObj);

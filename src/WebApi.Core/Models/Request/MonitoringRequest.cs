@@ -14,6 +14,7 @@ namespace OperationalDashboard.Web.Api.Core.Models.Request
         public DateTime? EndDateTime { get; set; }
         public bool IsDateCustom { get; set; }
         public int RelativeMinutes { get; set; }
+        public int? Limit { get; set; } = 10;
         public string NextToken { get; set; }
     }
 }
