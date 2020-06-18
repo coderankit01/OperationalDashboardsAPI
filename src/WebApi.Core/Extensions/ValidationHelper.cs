@@ -51,6 +51,86 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
 
 
         }
+        public static bool IsValidMonitorRequest(MonitoringRequest monitoringRequest,string MetricType, out string Message)
+        {
+            if (monitoringRequest.ResourceIds==null|| !monitoringRequest.ResourceIds.Any())
+            {
+                
+                Message = $"There is no ResourceId corresponding to the metrics";
+                return false;
+            }
+            DateTime temp;
+            if(monitoringRequest.IsDateCustom)
+            {
+                if (!DateTime.TryParse(monitoringRequest.StartDateTime.ToString(), out temp))
+                {
 
+                    Message = $"Invalid Start Date:{monitoringRequest.StartDateTime.ToString()}";
+                    return false;
+                }
+                if (!DateTime.TryParse(monitoringRequest.EndDateTime.ToString(), out temp))
+                {
+                    Message = $"Invalid End Date:{monitoringRequest.EndDateTime.ToString()}";
+                    return false;
+                }
+            }
+            else
+            {
+                if (monitoringRequest.RelativeMinutes <= 0)
+                {
+                    Message = $"Invalid relative time:{monitoringRequest.RelativeMinutes}";
+                    return false;
+                }
+            }
+            if(!MonitoringConstants.MetricType.Any(x=> x.Equals(MetricType)))
+            {
+                Message=$"Invalid MetricType:{MetricType}, Please enter proper MetricType; It should be {String.Join(",", MonitoringConstants.MetricType.ToList())}";
+                return false;
+            }
+            if(!MonitoringConstants.NameSpace.Any(x=> x.Equals(monitoringRequest.NameSpace)))
+            {
+                Message=$"Invalid namespace:{monitoringRequest.NameSpace}, Please provide a proper namespace; It should be {String.Join(",", MonitoringConstants.NameSpace.ToList())}";
+                return false;
+            }
+            Message = "Request is valid";
+            return true;
+        }
+        public static bool IsValidateGetMetrics(MonitoringRequest monitoringRequest, out string Message)
+        {
+            if (!MonitoringConstants.NameSpace.Any(x => x.Equals(monitoringRequest.NameSpace)))
+            {
+                Message = $"Invalid namespace:{monitoringRequest.NameSpace}, Please provide a proper namespace; It should be {String.Join(",", MonitoringConstants.NameSpace.ToList())}";
+                return false;
+            }
+            if (!MonitoringConstants.Ec2Metrics.Any(x => x.Equals(monitoringRequest.Metrics)))
+            {
+                Message = $"Invalid Metrics value:{monitoringRequest.Metrics}, it should be {String.Join(",", MonitoringConstants.Ec2Metrics)}";
+                return false;
+            }
+            Message = "Request is valid";
+            return true;
+        }   
+        public static bool IsValidateSummary(MonitoringRequest monitoringRequest , out string Message)
+        {
+            if (!MonitoringConstants.NameSpace.Any(x => x.Equals(monitoringRequest.NameSpace)))
+            {
+                Message = $"Invalid namespace:{monitoringRequest.NameSpace}, Please provide a proper namespace; It should be {String.Join(",", MonitoringConstants.NameSpace.ToList())}";
+                return false;
+            }
+            Message = "Request is valid";
+            return true;
+        }
+        public static bool IsValidateResources(MonitoringResourceRequest monitoringResourceRequest, out string Message)
+        {
+            if(!MonitoringConstants.NameSpace.Any(X=> X.Equals(monitoringResourceRequest.Namespace)))
+            {
+                Message = $"Invalid Namespace:{monitoringResourceRequest.Namespace}, Please provide proper namespace. It should be {String.Join(",", MonitoringConstants.NameSpace.ToList())}";
+                return false;
+            }
+            Message = "Request is valid";
+            return true;
+        }
+
+            
     }
 }

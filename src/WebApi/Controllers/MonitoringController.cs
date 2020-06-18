@@ -28,6 +28,10 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost("Metrics")]
         public async Task<IActionResult> GetMetrics([FromBody]MonitoringRequest monitoringRequest,[FromQuery]string MetricType)
         {
+            if (!ValidationHelper.IsValidMonitorRequest(monitoringRequest, MetricType, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics);
             var filterMetrics = metrics.Where(x => monitoringRequest.ResourceIds.Any(y => x.Dimensions.Any(z => z.Value.Equals(y)))).ToList() ;
             var response = await monitoringOperations.GetMetricsData(monitoringRequest, filterMetrics);
@@ -38,10 +42,27 @@ namespace OperationDashboard.Web.Api.Controllers
             var mapResponse = monitoringOperations.MapResponse(response.MetricResponse, MetricType, monitoringRequest.Limit);
             return Ok(mapResponse);
         }
+
+        [HttpPost("Metric")]
+        public async Task<IActionResult> GetMetric([FromBody]MonitoringRequest monitoringRequest)
+            {
+            if (!ValidationHelper.IsValidateGetMetrics(monitoringRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
+            var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics,monitoringRequest.ResourceIds.FirstOrDefault());
+            var response = await monitoringOperations.GetMetricsData(monitoringRequest, metrics);
+
+            return Ok(response);
+        }
         [HttpGet("Summary")]
-        public async Task<IActionResult> GetResourceSummary([FromQuery]string nameSpace,[FromQuery]string region)
+        public async Task<IActionResult> GetResourceSummary([FromQuery]MonitoringRequest monitoringRequest,[FromQuery]string region)
         {
-            IResourceDetails resourceDetails = ReflectionHelper.GetInstanceByNamespace(nameSpace);
+            if (!ValidationHelper.IsValidateSummary(monitoringRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
+            IResourceDetails resourceDetails = ReflectionHelper.GetInstanceByNamespace(monitoringRequest.NameSpace);
             var response = await resourceDetails.GetResources(region);
             return Ok(response);
         }
@@ -49,12 +70,16 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpPost("Resources")]
         public async Task<IActionResult> GetResourceDetails([FromBody]MonitoringResourceRequest monitoringResourceRequest)
         {
+            if(!ValidationHelper.IsValidateResources(monitoringResourceRequest, out string message))
+            {
+                return BadRequest(new { Message = message });
+            }
             IResourceDetails resourceDetails = ReflectionHelper.GetInstanceByNamespace(monitoringResourceRequest.Namespace);
             var response= await resourceDetails.GetResourceDetails(monitoringResourceRequest);
             return Ok(response);
         }
 
-        [HttpGet("Region")]
+        [HttpGet("Region")]  
         public async Task<IActionResult> GetRegions()
         {
             var response = await eC2Operations.GetRegions();
