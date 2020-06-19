@@ -1,4 +1,5 @@
-﻿using OperationalDashboard.Web.Api.Core.Constants;
+﻿using Amazon.AWSSupport.Model;
+using OperationalDashboard.Web.Api.Core.Constants;
 using OperationalDashboard.Web.Api.Core.Models.Request;
 using System;
 using System.Collections.Generic;
@@ -130,7 +131,16 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
             Message = "Request is valid";
             return true;
         }
-
+        public static bool IsValidateChecksCategory(string category, out string Message)
+        {
+            if(!TrustedAdvisoryConstants.AdvisoryCategory.Any(x=> x.Equals(category)))
+            {
+                Message = $"Invalid Category:{category}, Please provide proper category. It should be {String.Join(",", TrustedAdvisoryConstants.AdvisoryCategory)}";
+                return false;
+            }
+             Message= "Request is valid";
+            return true;
+        }
             
     }
 }
