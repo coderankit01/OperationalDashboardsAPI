@@ -9,9 +9,11 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
 {
     public interface ICostRecommendationsOperations
     {
-        Task<List<CostRecommendationResponse>> GetCurrentCostRecomNSavingsCost();
-        Task<List<CostRecommendationResponse>> GetCPUusageDetails();
+        Task<List<CostRecommendationResponse>> GetCostSummaryDetails();
+        Task<CostRecommendationSummaryResponse> GetCostSummary();
+        Task<object> GetCpuVsRecommendCpuUsage();
+        Task<object> GetUsedVsUnusedCpu();
+        Task<object> GetCostVsSavings();
         Task<GetRightsizingRecommendationResponse> GetHighRecommActivities();
-        Task<CostRecommendationResponse> GetSummaryData();
     }
 }

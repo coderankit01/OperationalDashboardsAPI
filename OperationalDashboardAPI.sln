@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Core", "src\WebApi.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Infrastructure", "src\WebApi.Infrastructure\WebApi.Infrastructure.csproj", "{23457FA8-1283-4C38-A974-CAD722EF0ED0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".ebextensions", ".ebextensions", "{5365E8CF-A652-4F0F-8779-06C5817B0FD5}"
+	ProjectSection(SolutionItems) = preProject
+		WebApi.config = WebApi.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

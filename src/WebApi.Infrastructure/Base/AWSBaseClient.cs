@@ -15,7 +15,7 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Base
             {
                 var sharedFile = new SharedCredentialsFile();
                 AWSCredentials credentials=null;
-               if ( sharedFile.TryGetProfile("DEV", out var profileOptions))
+               if ( sharedFile.TryGetProfile(Config.Configurations.Profile, out var profileOptions))
                 {
                     if (AWSCredentialsFactory.TryGetAWSCredentials(profileOptions, sharedFile, out  credentials))
                     {

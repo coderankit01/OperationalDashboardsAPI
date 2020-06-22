@@ -111,11 +111,11 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
             Message = "Request is valid";
             return true;
         }   
-        public static bool IsValidateSummary(MonitoringRequest monitoringRequest , out string Message)
+        public static bool IsValidateSummary(string Namespace , out string Message)
         {
-            if (!MonitoringConstants.NameSpace.Any(x => x.Equals(monitoringRequest.NameSpace)))
+            if (!MonitoringConstants.NameSpace.Any(x => x.Equals(Namespace)))
             {
-                Message = $"Invalid namespace:{monitoringRequest.NameSpace}, Please provide a proper namespace; It should be {String.Join(",", MonitoringConstants.NameSpace.ToList())}";
+                Message = $"Invalid namespace:{Namespace}, Please provide a proper namespace; It should be {String.Join(",", MonitoringConstants.NameSpace.ToList())}";
                 return false;
             }
             Message = "Request is valid";

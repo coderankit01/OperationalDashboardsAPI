@@ -18,32 +18,41 @@ namespace OperationDashboard.Web.Api.Controllers
         {
             costRecommendationsOperations = _costRecommendationsOperations;
         }
+        [HttpGet]
+        public async Task<IActionResult> GetCostSummaryDetails()
+        {
+            var response = await costRecommendationsOperations.GetCostSummaryDetails();
+            return Ok(response);
+        }
+        [HttpGet("Summary")]
+        public async Task<IActionResult> RecommendationsSummary()
+        {
+            var response = await costRecommendationsOperations.GetCostSummary();
+            return Ok(response);
+        }
+        [HttpGet("CPU")]
+        public async Task<IActionResult> GetUsedVsUnusedCpu()
+        {
+            var response = await costRecommendationsOperations.GetUsedVsUnusedCpu();
+            return Ok(response);
+        }
+        [HttpGet("RecommendCpu")]
+        public async Task<IActionResult> GetCpuVsRecommendCpuUsage()
+        {
+            var response = await costRecommendationsOperations.GetCpuVsRecommendCpuUsage();
+            return Ok(response);
+        }
         [HttpGet("Savings")]
-        public async Task<IActionResult> GetMonthlyCost()
+        public async Task<IActionResult> GetCostVsSavings()
         {
-            var response = await costRecommendationsOperations.GetCurrentCostRecomNSavingsCost();
+            var response = await costRecommendationsOperations.GetCostVsSavings();
             return Ok(response);
         }
-        //getting output but also fetches empty variab;les of CostRecommendationResponse Class
-        [HttpGet("CPUusage")]
-        public async Task<IActionResult> UnusedCPUusage()
-        {
-            var response = await costRecommendationsOperations.GetCPUusageDetails();
-            return Ok(response);
-        }
-
-       //getting RecommendationResponse in output
+        //getting RecommendationResponse in output
         [HttpGet("Activities")]
         public async Task<IActionResult> RecommendationActivities()
         {
             var response = await costRecommendationsOperations.GetHighRecommActivities();
-            return Ok(response);
-        }
-
-        [HttpGet("Summary")]
-        public async Task<IActionResult> RecommendationsSummary()
-        {
-            var response = await costRecommendationsOperations.GetSummaryData();
             return Ok(response);
         }
 

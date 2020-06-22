@@ -56,13 +56,13 @@ namespace OperationDashboard.Web.Api.Controllers
             return Ok(response);
         }
         [HttpGet("Summary")]
-        public async Task<IActionResult> GetResourceSummary([FromQuery]MonitoringRequest monitoringRequest,[FromQuery]string region)
+        public async Task<IActionResult> GetResourceSummary([FromQuery]string Namespace,[FromQuery]string region)
         {
-            if (!ValidationHelper.IsValidateSummary(monitoringRequest, out string message))
+            if (!ValidationHelper.IsValidateSummary(Namespace, out string message))
             {
                 return BadRequest(new { Message = message });
             }
-            IResourceDetails resourceDetails = ReflectionHelper.GetInstanceByNamespace(monitoringRequest.NameSpace);
+            IResourceDetails resourceDetails = ReflectionHelper.GetInstanceByNamespace(Namespace);
             var response = await resourceDetails.GetResources(region);
             return Ok(response);
         }

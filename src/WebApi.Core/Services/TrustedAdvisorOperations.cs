@@ -77,12 +77,17 @@ namespace OperationalDashboard.Web.Api.Core.Services
         public async Task<object> GetResourceDetails(string checkID)
         {
             var response = await TrustedAdvisorChecks("en");
-            var mapResponse = response.Checks.FirstOrDefault(x => x.Id.Equals(checkID)).Metadata;
+            var mapResponse = response.Checks.FirstOrDefault(x => x.Id.Equals(checkID));
             var details = response.Checks.Select(x => x.Metadata);
             var stateResponse = await TrustedAdvisorCheckResult(checkID,"en");
-            var resourceDetails= stateResponse.Result.FlaggedResources.Select(x => x.Metadata.Select((z, i) => new { index = i, value = z }).ToDictionary(key => mapResponse[key.index], value => value.value));
+            var resourceDetails = stateResponse.Result.FlaggedResources.Select(x => x.Metadata.Select((z, i) => new { index = i, value = z }).ToDictionary(key => mapResponse.Metadata[key.index], value => value.value));
+            return new
+            {
+                CheckName = mapResponse.Name,
+                Recommendation = mapResponse.Description,
+                Resources = resourceDetails
+            };
             
-            return resourceDetails;
         }
     }
 }

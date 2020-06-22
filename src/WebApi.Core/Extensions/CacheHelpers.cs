@@ -15,6 +15,11 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
         private static readonly string _metricItemsKeyTemplate = "metric-{0}-{1}";
         private static readonly string _listMetricItemsKeyTemplate = "listmetric";
         private static readonly string _LinkedAccountMetricItemsKeyTemplate = "account-{0}-{1}";
+        private static readonly string _CostRecommendationItemsKeyTemplate = "CostRecommendation-{0}";
+        private static readonly string _CostRecommendationSummaryItemsKeyTemplate = "CostRecommendationSummary-{0}";
+        private static readonly string _CostRecommendationCpuUsageItemsKeyTemplate = "CostRecommendationCpuUsage-{0}";
+        private static readonly string _CostRecommendationUnUsedCpuUsageItemsKeyTemplate = "CostRecommendationUnUsedCpuUsage-{0}";
+        private static readonly string _CostRecommendationSavingsItemsKeyTemplate = "CostRecommendationUnUsedSavings-{0}";
         public static readonly TimeSpan absoluteExpirationRelativeToNow = TimeSpan.FromDays(1);
         public static string GenerateServiceCacheItemKey(CostUsageRequest costUsageRequest)
         {
@@ -41,6 +46,26 @@ namespace OperationalDashboard.Web.Api.Core.Extensions
         public static string GenerateCacheKeyForListMetric()
         {
             return string.Format(_listMetricItemsKeyTemplate);
+        }
+        public static string GenerateCacheKeyForCostRecommnedationSummary()
+        {
+            return string.Format(_CostRecommendationSummaryItemsKeyTemplate, DateTime.Now.ToString("yyyyMMdd"));
+        }
+        public static string GenerateCacheKeyForCostRecommnedationUnsedCpu()   
+        {
+            return string.Format(_CostRecommendationUnUsedCpuUsageItemsKeyTemplate, DateTime.Now.ToString("yyyyMMdd"));
+        }
+        public static string GenerateCacheKeyForCostRecommendationCpu()
+        {
+            return string.Format(_CostRecommendationCpuUsageItemsKeyTemplate, DateTime.Now.ToString("yyyyMMdd"));
+        }
+        public static string GenerateCacheKeyForCostRecommendation()
+        {
+            return string.Format(_CostRecommendationItemsKeyTemplate, DateTime.Now.ToString("yyyyMMdd"));
+        }
+        public static string GenerateCacheKeyForCostRecommendationSaving()
+        {
+            return string.Format(_CostRecommendationSavingsItemsKeyTemplate, DateTime.Now.ToString("yyyyMMdd"));
         }
         public static string GenerateCacheKeyForLinkedAccount(string startDate,string endDate)
         {

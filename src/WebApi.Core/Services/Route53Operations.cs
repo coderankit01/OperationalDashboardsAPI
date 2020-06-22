@@ -27,10 +27,10 @@ namespace OperationalDashboard.Web.Api.Core.Services
             route53Repository = new Route53Repository();
             route53Repository.Region = monitoringResourceRequest.Region;
             var response = await route53Repository.GetHostedZones();
-            var filterResponse = response.HostedZones.Where(x => monitoringResourceRequest.ResourceIds.Any(y => y.Equals(x.Id)));
+            var filterResponse = response.HostedZones.Where(x => monitoringResourceRequest.ResourceIds.Any(y => y.Equals(x.Id.Replace("/hostedzone/", ""))));
             var mapResponse = filterResponse.Select(x => new Route53Response()
             {
-                HostedZoneID = x.Id,
+                HostedZoneID = x.Id.Replace("/hostedzone/",""),
                 Comment = x.Config?.Comment,
                 DomainName = x.Name,
                 RecordSetCount = x.ResourceRecordSetCount.ToString()
@@ -43,7 +43,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
             route53Repository = new Route53Repository();
             route53Repository.Region = region;
             var response = await route53Repository.GetHostedZones();
-            var resources = response.HostedZones.Select(x => x.Id).ToList();
+            var resources = response.HostedZones.Select(x => x.Id.Replace("/hostedzone/", "")).ToList();
             return new MonitoringSummaryResponse()
             {
                 Label = "AWS/Route53",

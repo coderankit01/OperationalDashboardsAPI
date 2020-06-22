@@ -42,8 +42,7 @@ namespace OperationDashboard.Web.Api.Controllers
                 CredentialProfile basicProfile;
                 if (netSDKFile.TryGetProfile(aWSCredentials.ProfileName, out basicProfile))
                 {
-                   // basicProfile.Options.AccessKey = aWSCredentials.AccessKey;
-                    //basicProfile.Options.SecretKey = aWSCredentials.SecretKey;
+                   
 
                     netSDKFile.UnregisterProfile(aWSCredentials.ProfileName);
                     CredentialProfileOptions options = new CredentialProfileOptions()
@@ -63,6 +62,7 @@ namespace OperationDashboard.Web.Api.Controllers
                         SecretKey = aWSCredentials.SecretKey
                     };
                     var profile = new CredentialProfile(aWSCredentials.ProfileName, options);
+                    //netSDKFile = new SharedCredentialsFile(Directory.GetCurrentDirectory()+ @"\Credentials");
                     netSDKFile = new SharedCredentialsFile();
                     netSDKFile.RegisterProfile(profile);
                 }
@@ -72,13 +72,15 @@ namespace OperationDashboard.Web.Api.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message+ex.StackTrace);
             }
           
         }
         [HttpGet]
         public async Task<IActionResult> GetProfile([FromQuery]string profile)
         {
+            string path = Directory.GetCurrentDirectory();
+           // var sharedFile = new SharedCredentialsFile(path+ @"\Credentials");
             var sharedFile = new SharedCredentialsFile();
             sharedFile.TryGetProfile(profile, out var profileOptions);
             if(AWSCredentialsFactory.TryGetAWSCredentials(profileOptions, sharedFile, out var credentials))
@@ -90,5 +92,11 @@ namespace OperationDashboard.Web.Api.Controllers
             }
             return NotFound(new { Message=$"No Credentials Found for Profile:{profile}"});
         }
+        [HttpGet("Environment")]
+        public IActionResult GetEnvironment([FromQuery] string Name)
+        {
+            return Ok( Environment.GetEnvironmentVariable(Name));
+        }
+
     }
 }

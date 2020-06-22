@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using OperationalDashboard.Web.Api.Core.Interfaces;
 using OperationalDashboard.Web.Api.Core.Mapper;
 using OperationalDashboard.Web.Api.Core.Services;
+using OperationalDashboard.Web.Api.Infrastructure.Config;
 using OperationalDashboard.Web.Api.Infrastructure.Data.AWS;
 using OperationalDashboard.Web.Api.Infrastructure.Interfaces;
 using OperationDashboard.Web.Api.Extentions;
@@ -51,9 +52,10 @@ namespace OperationDashboard.Web.Api
             services.AddScoped<ITrustedAdvisorRepository, TrustedAdvisorRepository>();
       
 
-            services.AddScoped<ICostRecommendationsOperations, CostRecommendationsOperations>();
+            services.AddScoped<ICostRecommendationsOperations, CachedCostRecommendationsOperations>();
             services.AddScoped<ICostExplorerOperations, CachedCostExplorerOperations>();
             services.AddScoped<CostExplorerOperations>();
+            services.AddScoped<CostRecommendationsOperations>();
             services.AddScoped<IMonitoringOperations, CachedMonitoringOperations>();
             services.AddScoped<MonitoringOperations>();
             services.AddScoped<IEC2Operations, EC2Operations>();
@@ -78,7 +80,11 @@ namespace OperationDashboard.Web.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            var builder = new ConfigurationBuilder()
+           .SetBasePath(env.ContentRootPath)
+           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+            
+            Configurations.Settings = builder.Build();
             app.UseCors(builder => builder
                               .AllowAnyOrigin()
                               .AllowAnyMethod()
