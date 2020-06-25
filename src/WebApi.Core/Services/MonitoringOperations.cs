@@ -85,6 +85,8 @@ namespace OperationalDashboard.Web.Api.Core.Services
         }
         public  object MapResponse(List<MonitoritingMetrics> monitoritingMetrics,string metricType,int? limit)
         {
+            //Distinct Response 
+            monitoritingMetrics = monitoritingMetrics.GroupBy(g => g.Label).Select(x => x.First()).ToList();
             switch (metricType)
             {
                 case "LINE":

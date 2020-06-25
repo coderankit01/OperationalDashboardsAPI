@@ -33,7 +33,7 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
                 return response;
             }
         }
-        //CheckSummary
+       
         public async Task<DescribeTrustedAdvisorCheckSummariesResponse> GetTrustedAdvisorCheckSummary(DescribeTrustedAdvisorCheckSummariesRequest describeTrustedAdvisorCheckSummariesRequest)
         {
             using (var amazonAWSSupportClient = new AmazonAWSSupportClient(awsCredentials, RegionEndpoint.GetBySystemName(Region)))
@@ -42,8 +42,14 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
                 return response;
             }
         }
-        //amke operations in Services
-        //include in Startup class
+        public async Task<RefreshTrustedAdvisorCheckResponse> RefreshChecks(RefreshTrustedAdvisorCheckRequest refreshTrustedAdvisorCheck)
+        {
+            using (var amazonAWSSupportClient = new AmazonAWSSupportClient(awsCredentials, RegionEndpoint.GetBySystemName(Region)))
+            {
+                var response = await amazonAWSSupportClient.RefreshTrustedAdvisorCheckAsync(refreshTrustedAdvisorCheck);
+                return response;
+            }
+        }
 
     }
 }

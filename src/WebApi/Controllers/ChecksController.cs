@@ -46,5 +46,11 @@ namespace OperationDashboard.Web.Api.Controllers
             var response = await trustedAdvisorOperations.GetResourceDetails(CheckId);
             return Ok(response);
         }
+        [HttpPost("Refresh")]
+        public async Task<IActionResult> RefreshChecks([FromQuery]string Category)
+        {
+            var response = await trustedAdvisorOperations.RefreshCheckByCategory(Category);
+            return Ok(response);
+        }
     } 
 }

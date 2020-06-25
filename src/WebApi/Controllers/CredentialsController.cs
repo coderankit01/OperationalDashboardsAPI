@@ -79,8 +79,6 @@ namespace OperationDashboard.Web.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProfile([FromQuery]string profile)
         {
-            string path = Directory.GetCurrentDirectory();
-           // var sharedFile = new SharedCredentialsFile(path+ @"\Credentials");
             var sharedFile = new SharedCredentialsFile();
             sharedFile.TryGetProfile(profile, out var profileOptions);
             if(AWSCredentialsFactory.TryGetAWSCredentials(profileOptions, sharedFile, out var credentials))

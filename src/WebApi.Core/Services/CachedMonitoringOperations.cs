@@ -38,13 +38,13 @@ namespace OperationalDashboard.Web.Api.Core.Services
         }
         public async Task<List<Metric>> GetMetrics(string region, string nameSpace, string metric)
         {
-            var cacheKey = CacheHelpers.GenerateCacheKeyForMetric(nameSpace, metric);
-
-            return await cache.GetOrCreateAsync(cacheKey, async entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = CacheHelpers.absoluteExpirationRelativeToNow;
-                return await monitortingOperations.GetMetrics(region, nameSpace, metric);
-            });
+            //var cacheKey = CacheHelpers.GenerateCacheKeyForMetric(nameSpace, metric);
+            return await monitortingOperations.GetMetrics(region, nameSpace, metric);
+            //return await cache.GetOrCreateAsync(cacheKey, async entry =>
+            //{
+            //    entry.AbsoluteExpirationRelativeToNow = CacheHelpers.absoluteExpirationRelativeToNow;
+                
+            //});
         }
         public async Task<MonitoringSummaryResponse> GetResourceSummary(string region, string nameSpace)
         {

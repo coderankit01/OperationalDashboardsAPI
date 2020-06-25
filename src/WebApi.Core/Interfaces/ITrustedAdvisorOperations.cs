@@ -13,5 +13,6 @@ namespace OperationalDashboard.Web.Api.Core.Interfaces
         Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string category);
         Task<AdvisorySummaryResponse> GetAdvisorySummary(string category);
         Task<object> GetResourceDetails(string checkID);
+        Task<object> RefreshCheckByCategory(string category);
     }
 }

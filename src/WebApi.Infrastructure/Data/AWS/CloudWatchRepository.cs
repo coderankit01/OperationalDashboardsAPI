@@ -12,14 +12,12 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
 {
    public class CloudWatchRepository:AWSBaseClient, ICloudWatchRepository
     {
-        AmazonCloudWatchClient cloudWatchClient = new AmazonCloudWatchClient("AKIAV4RXYT3ZMYJB3RCD", "mdbi7G03FqEjJWjC1VJHNuT+GkE5d5Qtf2CxbDTW", new AmazonCloudWatchConfig() { RegionEndpoint = RegionEndpoint.GetBySystemName("us-east-1") });// new AmazonCloudWatchConfig() { RegionEndpoint= RegionEndpoint.GetBySystemName("us-east-1") });
-
         public string Region { get; set; }
         public async Task<ListMetricsResponse> ListMetrics(ListMetricsRequest listMetricsRequest)
         {
             using (var amazonCloudWatchClient = new AmazonCloudWatchClient(awsCredentials,RegionEndpoint.GetBySystemName(Region)))
             {
-                var response = await cloudWatchClient.ListMetricsAsync(listMetricsRequest);
+                var response = await amazonCloudWatchClient.ListMetricsAsync(listMetricsRequest);
                 return response;
             }
                
@@ -28,7 +26,7 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
         {
             using (var amazonCloudWatchClient = new AmazonCloudWatchClient(awsCredentials, RegionEndpoint.GetBySystemName(Region)))
             {
-                var response = await cloudWatchClient.ListMetricsAsync();
+                var response = await amazonCloudWatchClient.ListMetricsAsync();
                 return response;
             }
         }
@@ -36,7 +34,7 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
         {
             using (var amazonCloudWatchClient = new AmazonCloudWatchClient(awsCredentials, RegionEndpoint.GetBySystemName(Region)))
             {
-                var response = await cloudWatchClient.GetMetricDataAsync(metricDataRequest);
+                var response = await amazonCloudWatchClient.GetMetricDataAsync(metricDataRequest);
                 return response;
             }
         }
@@ -44,7 +42,7 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Data.AWS
         {
             using (var amazonCloudWatchClient = new AmazonCloudWatchClient(awsCredentials, RegionEndpoint.GetBySystemName(Region)))
             {
-                var response = await cloudWatchClient.GetMetricStatisticsAsync(metricStatisticsRequest);
+                var response = await amazonCloudWatchClient.GetMetricStatisticsAsync(metricStatisticsRequest);
                 return response;
             }
 

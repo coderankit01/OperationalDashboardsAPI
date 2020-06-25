@@ -12,5 +12,6 @@ namespace OperationalDashboard.Web.Api.Infrastructure.Interfaces
         Task<DescribeTrustedAdvisorChecksResponse> GetTrustedAdvisorChecks(DescribeTrustedAdvisorChecksRequest describeTrustedAdvisorChecksRequest);
         Task<DescribeTrustedAdvisorCheckResultResponse> GetTrustedAdvisorCheckResult(DescribeTrustedAdvisorCheckResultRequest describeTrustedAdvisorCheckResultRequest);
         Task<DescribeTrustedAdvisorCheckSummariesResponse> GetTrustedAdvisorCheckSummary(DescribeTrustedAdvisorCheckSummariesRequest describeTrustedAdvisorCheckSummariesRequest);
+        Task<RefreshTrustedAdvisorCheckResponse> RefreshChecks(RefreshTrustedAdvisorCheckRequest refreshTrustedAdvisorCheck);
     }
 }

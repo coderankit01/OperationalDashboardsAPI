@@ -46,8 +46,7 @@ namespace OperationalDashboard.Web.Api.Core.Services
         }
         public async Task<AdvisorySummaryResponse> GetAdvisorySummary(string category)
         {
-            var response = await  TrustedAdvisorChecks("en");
-            var mapResponse = response.Checks.Where(x => x.Category.Equals(category)).Select(y => y.Id).ToList();
+            var mapResponse = await GetCheckIDsByCategory(category);
             var stateResponse = await TrustedAdvisorCheckSummary(mapResponse);
             AdvisorySummaryResponse stateCountResponse = new AdvisorySummaryResponse()
             {
@@ -57,6 +56,12 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 NotAvailableCount = stateResponse.Summaries.Where(x => x.Status.Equals("not_available")).Count()
             };
             return stateCountResponse;
+        }
+        private async Task<List<string>> GetCheckIDsByCategory(string category)
+        {
+            var response = await TrustedAdvisorChecks("en");
+            var mapResponse = response.Checks.Where(x => x.Category.Equals(category)).Select(y => y.Id).ToList();
+            return mapResponse;
         }
         public async Task<List<ResourceRecommendationResponse>> GetResourceRecommendation(string category)
         {
@@ -88,6 +93,17 @@ namespace OperationalDashboard.Web.Api.Core.Services
                 Resources = resourceDetails
             };
             
+        }
+        public async Task<object> RefreshCheckByCategory(string category)
+        {
+            var checkIDs = await GetCheckIDsByCategory(category);
+            var responses = new List<object>();
+            foreach(var checkID in checkIDs)
+            {
+                var response = await trustedAdvisorRepository.RefreshChecks(new RefreshTrustedAdvisorCheckRequest() { CheckId = checkID });
+                responses.Add(response);
+            }
+            return responses;
         }
     }
 }
