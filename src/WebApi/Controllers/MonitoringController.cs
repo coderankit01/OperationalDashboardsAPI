@@ -36,15 +36,7 @@ namespace OperationDashboard.Web.Api.Controllers
                 return BadRequest(new { Message = message });
             }
             var metrics = await monitoringOperations.GetMetrics(monitoringRequest.Region, monitoringRequest.NameSpace, monitoringRequest.Metrics);
-            var filterMetrics = metrics.Where(x => monitoringRequest.ResourceIds.Any(y =>  x.Dimensions.Any(z =>  z.Value.Equals(y)))).
-               
-                Select(z => new Metric()
-                {
-                    MetricName = z.MetricName,
-                    Namespace = z.Namespace,
-                    Dimensions = z.Dimensions.Where(y => y.Name.Equals(MonitoringConstants.nameSpaceIdentifiers[monitoringRequest.NameSpace])).ToList()
-                }).ToList();
-            
+            var filterMetrics = metrics.Where(x => monitoringRequest.ResourceIds.Any(y => x.Dimensions.Any(z => z.Value.Equals(y)))).ToList();
             var response = await monitoringOperations.GetMetricsData(monitoringRequest, filterMetrics);
             var mapResponse = monitoringOperations.MapResponse(response.MetricResponse, MetricType, monitoringRequest.Limit);
             return Ok(mapResponse);

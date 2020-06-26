@@ -35,7 +35,8 @@ namespace OperationalDashboard.Web.Api.Core.Mapper
                   .ForMember(d => d.Id, opt => opt.Ignore())
                   .ForMember(d => d.Messages, opt => opt.Ignore());
 
-            CreateMap<MetricDataResult, MonitoritingMetrics>();
+            CreateMap<MetricDataResult, MonitoritingMetrics>()
+                  .ForMember(d => d.Label, opt => opt.MapFrom(s => string.Join(" ", s.Label.Split(' ').Distinct())));
 
             CreateMap<Instance, Ec2Response>()
                 .ForMember(d => d.InstanceID, opt => opt.MapFrom(s => s.InstanceId))
