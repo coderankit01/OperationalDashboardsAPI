@@ -102,6 +102,14 @@ namespace OperationalDashboard.Web.Api.Core.Services
         }
         private object BarResponse(List<MonitoritingMetrics> monitoritingMetrics,int? limit)
         {
+            if (!monitoritingMetrics.Any())
+            {
+                return new
+                {
+                    Name = "NA",
+                    Values = 0
+                };
+            }
             if(limit.HasValue && limit != -1)
             {
                 monitoritingMetrics.FirstOrDefault().Timestamps.Select((k, i) => new { Name = k.ToString(), Value = Math.Round(monitoritingMetrics.FirstOrDefault().Values[i], 2) }).OrderByDescending(o => o.Value).Take(limit.Value);
@@ -110,6 +118,14 @@ namespace OperationalDashboard.Web.Api.Core.Services
         }
         private object PieResponse(List<MonitoritingMetrics> monitoritingMetrics, int? limit)
         {
+            if (!monitoritingMetrics.Any())
+            {
+                return new
+                {
+                    Name = "NA",
+                    Values = 0
+                };
+            }
             if (limit.HasValue && limit != -1)
             {
                 return monitoritingMetrics.Select(x => new { Name = x.Label, Value = Math.Round(x.Values.Sum(), 2) }).OrderByDescending(o => o.Value).Take(limit.Value);

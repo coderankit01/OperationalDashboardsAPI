@@ -68,14 +68,14 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var response = await TrustedAdvisorChecks("en");
             var mapResponse = response.Checks.Where(x => x.Category.Equals(category)).Select(y => y.Id).ToList();
             var stateResponse = await TrustedAdvisorCheckSummary(mapResponse);
-            var temp = stateResponse.Summaries.Where(x => x.Status.Equals("warning") || x.Status.Equals("error")).Select(y => y.CheckId).ToList();
-            var checkDictionaray = stateResponse.Summaries.ToDictionary(x => x.CheckId, x => x.ResourcesSummary?.ResourcesFlagged);
-            var currentResponse = response.Checks.Where(x => temp.Any(y => y.Equals(x.Id))).Select(z => new ResourceRecommendationResponse()
+            var checkDictionaray = stateResponse.Summaries.Where(y=>y.Status.Equals("error")||y.Status.Equals("warning")).ToDictionary(x => x.CheckId, x => x);
+            var currentResponse = response.Checks.Where(x => checkDictionaray.ContainsKey(x.Id)).Select(z => new ResourceRecommendationResponse()
             {
                 CheckId=z.Id,
                 CheckName = z.Name,
                 Recommendation = z.Description,
-                ResourceCount= Convert.ToInt32(checkDictionaray[z.Id])
+                Status = checkDictionaray[z.Id].Status,
+                ResourceCount = Convert.ToInt32(checkDictionaray[z.Id].ResourcesSummary?.ResourcesFlagged)
             }); 
            return currentResponse.ToList();
         }

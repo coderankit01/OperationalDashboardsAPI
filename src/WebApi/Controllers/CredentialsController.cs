@@ -11,11 +11,13 @@ using Amazon.S3;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OperationalDashboard.Web.Api.Core.Models.Request;
+using OperationDashboard.Web.Api.Identity;
 
 namespace OperationDashboard.Web.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiKeyAuth]
     public class CredentialsController : ControllerBase
     {
         [HttpPost]

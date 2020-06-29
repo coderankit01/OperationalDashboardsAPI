@@ -163,8 +163,12 @@ namespace OperationalDashboard.Web.Api.Core.Services
             var mapRequest = mapper.Map<GetCostForecastRequest>(costUsageRequest);
             mapRequest.Granularity = Granularity.MONTHLY;
             mapRequest.Metric = Amazon.CostExplorer.Metric.UNBLENDED_COST;
-            string startDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
-            string endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            string startDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");//DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            string endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("yyyy-MM-dd"); //new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+            if (endDate.Equals(startDate))
+            {
+                
+            }
             mapRequest.TimePeriod = new DateInterval()  
             {
                 Start = startDate,
