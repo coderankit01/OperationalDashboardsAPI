@@ -17,10 +17,8 @@ It uses Below API to collect the data for monitoring the infrastructure.
 # Trusted Advisory Checks
 
 Internally it does use the below AWS .net core SDK.
-- **[CloudWatch API]**(https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/cloudwatch-getting-metrics-examples.html)
-- **[Cost Usage API]**(https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Operations_AWS_Cost_Explorer_Service.html)
-- **[Trust Advisory API]**(https://docs.aws.amazon.com/awssupport/latest/APIReference/API_Operations.html)
-
-**Bold** and _Italic_ and `Code` text
+- [CloudWatch API](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/cloudwatch-getting-metrics-examples.html)
+- [Cost Usage API](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Operations_AWS_Cost_Explorer_Service.html)
+- [Trust Advisory API](https://docs.aws.amazon.com/awssupport/latest/APIReference/API_Operations.html)
 
 ![Image](https://cdn.comparitech.com/wp-content/uploads/2018/11/Datadog-AWS-Monitoring-overview-dashboard.webp)
